@@ -96,12 +96,12 @@ public class BotApi20 extends TelegramLongPollingBot {
     public String getBotUsername() {
         // Return bot username
         // If bot username is @MyAmazingBot, it must return 'MyAmazingBot'
-        return "NoShow_bot";
+        return "nome";
     }
 
     @Override
     public String getBotToken() {
         // Return bot token from BotFather
-        return "516441239:AAG9VU7f04JiZ5KVSDGyzVVYxLNeon1ANJo";
+        return "key";
     }
 }
