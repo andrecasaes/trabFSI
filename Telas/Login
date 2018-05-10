@@ -3,14 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>Login</title>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="pt-br" charset="utf-8">
+    <title>Login</title>
 </head>
 <style>
 body {
     text-align: center;
 }
-a {
-    text-decoration: none;
-    color: black;
+table {
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .logo {
     background-color: rgb(255, 200, 163);
@@ -20,31 +26,78 @@ a {
     letter-spacing: 5px;
     font-family: "Verdana", sans-serif;
     position: fixed;
-    z-index: 10;
+    z-index: 1;
 }
 .titulo {
     padding-top: 100px;
+    z-index: 0;
 }
-.elementoForm {
+.button {
+    background-color: rgb(255, 200, 163);
+    border: none;
+    color: rgb(255, 103, 0);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
 }
-.botao {
-    background-color: rgb(187, 76, 0);
-    color: rgb(255, 200, 163);
-    margin-left: 45%;
-    margin-right: 45%;
+.buttonEsqueci {
+    background-color: white;
+    border: none;
+    color: rgb(255, 103, 0);
+    padding: 2px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+.button:hover {
+    background-color: rgb(204, 204, 204);
+    color: white;
+}
+.buttonEsqueci:hover {
+    background-color: rgb(204, 204, 204);
+    color: white;
 }
 </style>
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Login</h2>
-    <form class = "elementoForm">
-        Usuário:
-        <input type="text" name="usuario"><br>
-        Senha:
-        <input type="text" name="senha"><br>
+    <form name = "Login" method="post" onsubmit="return validateForm()">
+        <table>
+            <tr>
+                <td>Usuário:</td>
+                <td><input type="text" name="usuario" placeholder="Usuário"></td>
+            </tr>
+            <tr>
+                <td>Senha:</td>
+                <td><input type="password" name="senha" placeholder="Senha"></td>
+            </tr>
+        </table>
+        <input class="button" type="submit" value="Entrar">
     </form>
-    <div class = "botao"><a><h3>Entrar</h3></a></div>
-    <a href = "esqueciSenha.html"><h4>Esqueci minha senha</h4></a>
-    <div class = "botao"><a href = "cadastro.html"><h3>Quero me cadastrar</h3></a></div>
+    <button class="button">Cadastrar</button><br>
+    <button class="buttonEsqueci">Esqueci minha senha</button>
+<script type="text/javascript">
+    function validateForm() {
+    var usuario = document.forms["Login"]["usuario"].value;
+    var senha = document.forms["Login"]["senha"].value;
+    if (usuario == "") {
+        alert("Por favor, informe um nome de usuário.");
+        return false;
+    }
+    if (senha == "") {
+        alert("Por favor, digite sua senha.");
+        return false;
+    }
+}
+</script>
 </body>
 </html>
