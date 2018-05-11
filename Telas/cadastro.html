@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br" charset="utf-8">
     <title>Cadastro</title>
 </head>
 <style>
 body {
     text-align: center;
+}
+table {
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
 }
 .logo {
     background-color: rgb(255, 200, 163);
@@ -16,47 +21,135 @@ body {
     letter-spacing: 5px;
     font-family: "Verdana", sans-serif;
     position: fixed;
-    z-index: 10;
-}
-a {
-    color: blue;
-    text-decoration: underline;
+    z-index: 1;
 }
 .titulo {
     padding-top: 100px;
+    z-index: 0;
 }
-.elementoForm {
+.button {
+    background-color: rgb(255, 200, 163);
+    border: none;
+    color: rgb(255, 103, 0);
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
 }
-.botao {
-    background-color: rgb(187, 76, 0);
-    color: rgb(255, 200, 163);
-    margin-left: 45%;
-    margin-right: 45%;
+.buttonEsqueci {
+    background-color: white;
+    border: none;
+    color: rgb(255, 103, 0);
+    padding: 2px 4px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 15px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+.button:hover {
+    background-color: rgb(204, 204, 204);
+    color: white;
+}
+.buttonEsqueci:hover {
+    background-color: rgb(204, 204, 204);
+    color: white;
 }
 </style>
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Cadastro</h2>
-    <form class = "elementoForm">
-        Nome completo:
-        <input type="text" name="nome"><br>
-        E-mail:
-        <input type="text" name="e-mail"><br>
-        Usuario:
-        <input type="text" name="usuario"><br>
-        Senha:
-        <input type="text" name="senha"><br>
-        Confirmar senha:
-        <input type="text" name="senha"><br>
-        Profissão:
-        <select name="Profissao">
-            <option value="Cabeleireiro">Cabeleireiro</option>
-            <option value="Dentista">Dentista</option>
-            <option value="Manicure">Manicure</option>
-            <option value="Psicologo">Psicologo</option>
-        </select> 
+    <form name = "Cadastro" method="post" onsubmit="return validateCadastro()">
+        <table>
+            <tr>
+                <td>Nome completo:</td>
+                <td><input type="text" name="nome" placeholder="Como as pessoas te chamam?"></td>
+            </tr>
+            <tr>
+                <td>E-mail:</td>
+                <td><input id="email" type="e-mail" name="e-mail" placeholder="Onde a gente pode te encontrar?"></td>
+            </tr>
+            <tr>
+                <td>Usuário:</td>
+                <td><input type="text" name="usuario" placeholder="Seja criativo/a!"></td>
+            </tr>
+            <tr>
+                <td>Senha:</td>
+                <td><input type="password" name="senha" placeholder="Shh...!"></td>
+            </tr>
+            <tr>
+                <td>Confirmar senha:</td>
+                <td><input type="password" name="confirmarSenha" placeholder="De novo!"></td>
+            </tr>
+            <tr>
+                <td>Profissão:</td>
+                <td><select name="Profissão">
+                        <option value="null">--------</option>
+                        <option value="Cabeleireiro/a">Cabeleireiro</option>
+                        <option value="Dentista">Dentista</option>
+                        <option value="Manicure">Manicure</option>
+                        <option value="Psicologo/a">Psicologo</option>
+                        <option value="Médico/a">Médico/a</option>
+                        <option value="Massagista">Massagista</option>
+                        <option value="Acupunturista">Acupunturista</option>
+                        <option value="Outro">Outro</option>
+                </select></td>
+            </tr>
+        </table>
+        <input class="button" type="submit" value="Pronto!"><br>
+        <input class="button" type="reset" value="Limpar">
     </form>
-    <div class = "botao"><a href = "emailEnviado.html"><h3>Cadastrar</h3></a></div>
+<script type="text/javascript">
+    function checkEmail() {
+
+        var email = document.getElementById("email");
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+        if (!filter.test(email.value)) {
+            alert("Por favor, digite um e-mail válido.");
+            email.focus;
+            return false;
+        }
+    }
+    function validateCadastro() {
+        var nome = document.forms["Cadastro"]["nome"].value;
+        var email = document.forms["Cadastro"]["e-mail"].value;
+        var usuario = document.forms["Cadastro"]["usuario"].value;
+        var senha = document.forms["Cadastro"]["senha"].value;
+        var confirmarSenha = document.forms["Cadastro"]["confirmarSenha"].value;
+        var profissao = document.forms["Cadastro"]["Profissão"].value;
+        checkEmail();
+        if (nome == "") {
+            alert("Por favor, digite seu nome.");
+            return false;
+        }
+        if (email == "") {
+            alert("Por favor, digite um e-mail.");
+            return false;
+        }
+        if (usuario == "") {
+            alert("Por favor, informe um nome de usuário.");
+            return false;
+        }
+        if (senha == "") {
+            alert("Por favor, digite sua senha.");
+            return false;
+        }
+        if (confirmarSenha != senha) {
+            alert("Ops! As senhas não batem. Confira os campos Senha e Confirmar Senha.");
+            return false;
+        }
+        if (profissao == "null") {
+            alert("Por favor, selecione uma profissão.");
+            return false;
+        }
+    }
+</script>
 </body>
 </html>
-
