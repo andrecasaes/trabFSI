@@ -50,17 +50,6 @@
         <input class="button" type="reset" value="Limpar">
     </form>
 <script type="text/javascript">
-    function checkEmail() {
-
-        var email = document.getElementById("email");
-        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-
-        if (!filter.test(email.value)) {
-            alert("Por favor, digite um e-mail válido.");
-            email.focus;
-            return false;
-        }
-    }
     function validateCadastro() {
         var nome = document.forms["Cadastro"]["nome"].value;
         var email = document.forms["Cadastro"]["e-mail"].value;
@@ -69,6 +58,8 @@
         var confirmarSenha = document.forms["Cadastro"]["confirmarSenha"].value;
         var profissao = document.forms["Cadastro"]["Profissão"].value;
         var profissaoNova = document.getElementById("extra").value;
+        var email1 = document.getElementById("email");
+        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (nome == "") {
             alert("Por favor, digite seu nome.");
             return false;
@@ -76,8 +67,10 @@
         if (email == "") {
             alert("Por favor, digite um e-mail.");
             return false;
-        } else {
-        	checkEmail();
+        } else if (!filter.test(email1.value)) {
+            alert("Por favor, digite um e-mail válido.");
+            email1.focus;
+            return false;
         }
         if (usuario == "") {
             alert("Por favor, informe um nome de usuário.");
@@ -102,4 +95,3 @@
 </script>
 </body>
 </html>
-
