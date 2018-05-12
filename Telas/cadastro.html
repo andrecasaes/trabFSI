@@ -3,93 +3,36 @@
 <head>
     <meta http-equiv="Content-Language" content="pt-br" charset="utf-8">
     <title>Cadastro</title>
+    <link rel="stylesheet" type="text/css" href="forms.css">
 </head>
-<style>
-body {
-    text-align: center;
-}
-table {
-    width: 10%;
-    margin-left: auto;
-    margin-right: auto;
-}
-.logo {
-    background-color: rgb(255, 200, 163);
-    width: 100%; 
-    padding: 5px;
-    color: rgb(255, 103, 0);
-    letter-spacing: 5px;
-    font-family: "Verdana", sans-serif;
-    position: fixed;
-    z-index: 1;
-}
-.titulo {
-    padding-top: 100px;
-    z-index: 0;
-}
-.button {
-    background-color: rgb(255, 200, 163);
-    border: none;
-    color: rgb(255, 103, 0);
-    padding: 5px 10px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    border-radius: 8px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-}
-.buttonEsqueci {
-    background-color: white;
-    border: none;
-    color: rgb(255, 103, 0);
-    padding: 2px 4px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 15px;
-    border-radius: 8px;
-    -webkit-transition-duration: 0.4s;
-    transition-duration: 0.4s;
-}
-.button:hover {
-    background-color: rgb(204, 204, 204);
-    color: white;
-}
-.buttonEsqueci:hover {
-    background-color: rgb(204, 204, 204);
-    color: white;
-}
-</style>
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Cadastro</h2>
-    <form name = "Cadastro" method="post" onsubmit="return validateCadastro()">
+    <form name = "Cadastro" method="post" onsubmit="return validateCadastro()" action="emailEnviado.html">
         <table>
             <tr>
                 <td>Nome completo:</td>
-                <td><input type="text" name="nome" placeholder="Como as pessoas te chamam?"></td>
+                <td><input size="30" type="text" name="nome" placeholder="Como as pessoas te chamam?"></td>
             </tr>
             <tr>
                 <td>E-mail:</td>
-                <td><input id="email" type="e-mail" name="e-mail" placeholder="Onde a gente pode te encontrar?"></td>
+                <td><input size="30" autocomplete="on" id="email" type="e-mail" name="e-mail" placeholder="Onde a gente pode te encontrar?"></td>
             </tr>
             <tr>
                 <td>Usuário:</td>
-                <td><input type="text" name="usuario" placeholder="Seja criativo/a!"></td>
+                <td><input size="30" type="text" name="usuario" placeholder="Seja criativo/a!"></td>
             </tr>
             <tr>
                 <td>Senha:</td>
-                <td><input type="password" name="senha" placeholder="Shh...!"></td>
+                <td><input size="30" type="password" name="senha" placeholder="Shh...!"></td>
             </tr>
             <tr>
                 <td>Confirmar senha:</td>
-                <td><input type="password" name="confirmarSenha" placeholder="De novo!"></td>
+                <td><input size="30" type="password" name="confirmarSenha" placeholder="De novo!"></td>
             </tr>
             <tr>
                 <td>Profissão:</td>
-                <td><select name="Profissão">
+                <td style="text-align: left;"><select name="Profissão">
                         <option value="null">--------</option>
                         <option value="Cabeleireiro/a">Cabeleireiro</option>
                         <option value="Dentista">Dentista</option>
@@ -98,7 +41,8 @@ table {
                         <option value="Médico/a">Médico/a</option>
                         <option value="Massagista">Massagista</option>
                         <option value="Acupunturista">Acupunturista</option>
-                        <option value="Outro">Outro</option>
+                        <option value="Outro">Outro (digite):
+                        	<tr><td></td><td style="text-align: left;"><input size="30" type="text" name="extra" id="extra" style="visibility: hidden;" placeholder="A gente deve ter esquecido :("></td></tr></option>
                 </select></td>
             </tr>
         </table>
@@ -124,7 +68,7 @@ table {
         var senha = document.forms["Cadastro"]["senha"].value;
         var confirmarSenha = document.forms["Cadastro"]["confirmarSenha"].value;
         var profissao = document.forms["Cadastro"]["Profissão"].value;
-        checkEmail();
+        var profissaoNova = document.getElementById("extra").value;
         if (nome == "") {
             alert("Por favor, digite seu nome.");
             return false;
@@ -132,6 +76,8 @@ table {
         if (email == "") {
             alert("Por favor, digite um e-mail.");
             return false;
+        } else {
+        	checkEmail();
         }
         if (usuario == "") {
             alert("Por favor, informe um nome de usuário.");
@@ -148,8 +94,12 @@ table {
         if (profissao == "null") {
             alert("Por favor, selecione uma profissão.");
             return false;
+        } else if (profissao == "Outro" && profissaoNova == "") {
+        	document.getElementById("extra").style.visibility = "visible";
+        	return false;
         }
     }
 </script>
 </body>
 </html>
+
