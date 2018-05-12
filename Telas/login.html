@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="pt-br" charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="forms.css">
+</head>
+<body>
+    <div class = "logo"><h1>No Show</h1></div>
+    <h2 class = "titulo">Login</h2>
+    <form name = "Login" method="post" onsubmit="return validateForm()" action="menu.html">
+        <table>
+            <tr>
+                <td>Usuário:</td>
+                <td><input type="text" name="usuario" placeholder="Usuário" required></td>
+            </tr>
+            <tr>
+                <td>Senha:</td>
+                <td><input type="password" name="senha" placeholder="Senha" required></td>
+            </tr>
+        </table>
+        <input class="button" type="submit" value="Entrar">
+    </form>
+    <button class="button" onclick="window.location='cadastro.html'">Cadastrar</button><br>
+    <button class="buttonEsqueci" onclick="window.location='esqueciSenha.html'">Esqueci minha senha</button>
+<script type="text/javascript">
+    function validateForm() {
+        var usuario = document.forms["Login"]["usuario"].value;
+        var senha = document.forms["Login"]["senha"].value;
+        
+        if (usuario == "") {
+            alert("Por favor, informe um nome de usuário.");
+            return false;
+        }
+        if (senha == "") {
+            alert("Por favor, digite sua senha.");
+            return false;
+        }
+        
+    }
+</script>
+</body>
+</html>
