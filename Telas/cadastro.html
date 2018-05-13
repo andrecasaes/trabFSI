@@ -41,8 +41,8 @@
                         <option value="Médico/a">Médico/a</option>
                         <option value="Massagista">Massagista</option>
                         <option value="Acupunturista">Acupunturista</option>
-                        <option value="Outro">Outro (digite):
-                        	<tr><td></td><td style="text-align: left;"><input size="30" type="text" name="extra" id="extra" style="visibility: hidden;" placeholder="A gente deve ter esquecido :("></td></tr></option>
+                        <option value="Outro" id="outro">Outro (digite):</option>
+                        <tr><td></td><td style="text-align: left;" id="input"></td></tr>
                 </select></td>
             </tr>
         </table>
@@ -57,7 +57,6 @@
         var senha = document.forms["Cadastro"]["senha"].value;
         var confirmarSenha = document.forms["Cadastro"]["confirmarSenha"].value;
         var profissao = document.forms["Cadastro"]["Profissão"].value;
-        var profissaoNova = document.getElementById("extra").value;
         var email1 = document.getElementById("email");
         var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (nome == "") {
@@ -87,8 +86,12 @@
         if (profissao == "null") {
             alert("Por favor, selecione uma profissão.");
             return false;
-        } else if (profissao == "Outro" && profissaoNova == "") {
-        	document.getElementById("extra").style.visibility = "visible";
+        } else if (profissao == "Outro") {
+            var campo = document.createElement("input");
+            campo.type = "text";
+        	document.getElementById("input").appendChild(campo);
+            var outro = document.getElementById("outro");
+            outro.value = campo.value;
         	return false;
         }
     }
