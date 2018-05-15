@@ -12,8 +12,10 @@ public class MandaMSG extends TelegramLongPollingBot {
 
 	public void MandaMSG() {
 
+		long chatId = 0;
+		chatId = 403373459;
 		SendMessage manda = new SendMessage() // Create a message object object
-				.setChatId("403373459").setText("Bom dia!\nGostaria de saber se vc irá amanhã na consulta (manda) ");
+				.setChatId(chatId).setText("Bom dia!\nGostaria de saber se vc irá amanhã na consulta (manda) ");
 
 		InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
 		List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -28,8 +30,7 @@ public class MandaMSG extends TelegramLongPollingBot {
 		manda.setReplyMarkup(markupInline);
 
 		try {
-			execute(manda); // Sending our message object to user
-			// execute(encaminha);
+			execute(manda); // Manda a mensagem
 		} catch (TelegramApiException c) {
 			c.printStackTrace();
 		}

@@ -8,7 +8,6 @@ public class Main {
 		ApiContextInitializer.init();
 
 		TelaTeste tela = new TelaTeste();
-
 		// Instantiate Telegram Bots API
 		TelegramBotsApi botsApi = new TelegramBotsApi();
 

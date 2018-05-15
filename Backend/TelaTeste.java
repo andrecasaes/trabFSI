@@ -13,6 +13,7 @@ public class TelaTeste {
 
 		MandaMSG bot = new MandaMSG();
 		
+		
 
 		Display display = Display.getDefault();
 		Shell shell = new Shell();
@@ -29,7 +30,7 @@ public class TelaTeste {
 
 			@Override
 			public void mouseEnter(MouseEvent e) {
-				bot.MandaMSG();
+				bot.MandaMSG();			
 
 			}
 
