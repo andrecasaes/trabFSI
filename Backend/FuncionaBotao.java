@@ -16,6 +16,7 @@ public class FuncionaBotao extends TelegramLongPollingBot {
 	String answer;
 	
 	NovoUsuario inicia = new NovoUsuario();
+	Conecta consult = new Conecta();
 
 	@Override
 	public void onUpdateReceived(Update update) {
@@ -45,8 +46,9 @@ public class FuncionaBotao extends TelegramLongPollingBot {
 		case "Nome ok":
 			answer = "Que otimo! De boas então, vou fazer o seu cadastro!";
 			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);
-			NovoUsuario.casonovo=2;
-			inicia.NovoUsuario();
+			NovoUsuario.casonovo=1;
+			consult.Insere();
+			inicia.linkaProf();
 			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
 		break;
 			

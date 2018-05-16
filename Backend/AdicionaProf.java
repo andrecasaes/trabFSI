@@ -1,14 +1,12 @@
-/* Desativado
-	Desativado
-	Desativado
-	Desativado
-	Desativado
+import static java.lang.Math.toIntExact;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
+import org.telegram.telegrambots.api.methods.updatingmessages.EditMessageText;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ForceReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
@@ -22,42 +20,30 @@ public class AdicionaProf extends TelegramLongPollingBot implements ReplyKeyboar
 	
 	public void AdicionaProf() {
 		int i=Conecta.profissionais.size();
+		ForceReplyKeyboard replyMarkup = new ForceReplyKeyboard();
 		ReplyKeyboardMarkup teclado = new ReplyKeyboardMarkup();
 		List<KeyboardRow> linha = new ArrayList<KeyboardRow>();
-		KeyboardRow botao = new KeyboardRow();		
-		
-		//botao.clear();
+		KeyboardRow[] botao = new KeyboardRow[i];		
 		String[] array = new String[i];
-		array=Conecta.profissionais.toArray(array);
 		
-		SendMessage message = new SendMessage()
-				.setChatId(BotApi20.chat_id)
-				.setText("Caraio");
+		array=Conecta.profissionais.toArray(array);
+
 			int j =0;
-			///while (i != 0) {
-			//botao.add("teste");
-			//botao.add("testi");
 			while( i != 0) {
-				System.out.println(array[i-1]);
-				System.out.println("i="+i);
-				System.out.println("boa");	
-					//linha.add(j, botao);
-					//botao.add("teste");
-					//botao.set(1, "");//texto diferente
-					botao.add(j, array[i-1]);
-					linha.add(j,botao);//add o botao na linha
-					//botao.remove("testi");
-					//teclado.setKeyboard(linha).setOneTimeKeyboard(true);			
-					System.out.println(botao);
-					System.out.println("oe");
+				botao[j]= new KeyboardRow();
+				botao[j].add(array[i-1]);
+				linha.add(j, botao[j]);		
 				j++;
 				i--;
 			}
-			message.setReplyMarkup(teclado);
-			teclado.setKeyboard(linha);
+			teclado.setKeyboard(linha).setOneTimeKeyboard(true);
 			
+			SendMessage message = new SendMessage()
+					.setChatId(BotApi20.chat_id)
+					.setText("Seleciona pra mim quem vai cuidar de você?")
+					.setReplyMarkup(teclado);
 			
-		
+			BotApi20.z=2;
 		
 		System.out.println(teclado);
 		System.out.println(linha);
@@ -90,7 +76,3 @@ public class AdicionaProf extends TelegramLongPollingBot implements ReplyKeyboar
 	}
 
 }
-
-
-
-*/

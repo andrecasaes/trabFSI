@@ -27,10 +27,12 @@ public class BotApi20 extends TelegramLongPollingBot {
 	static int messageId;
 	static Message reply;
 	static String novoNome;
-	static String codigoProf;
+	static String nomeProf;
+	static int z=1;
 	
 	NovoUsuario novo = new NovoUsuario();
 	Conecta consult = new Conecta();
+	AdicionaProf adicio = new AdicionaProf();
 	@Override
 	public void onUpdateReceived(Update update) {
 
@@ -55,18 +57,8 @@ public class BotApi20 extends TelegramLongPollingBot {
 				novoNome = update.getMessage().getText();
 				NovoUsuario.in=2;
 				NovoUsuario reply = new NovoUsuario();
-				reply.NovoUsuario();
-				
-				
-				}else if(textodoreply.equals("Fala pra mim o codigo que o profissional te passou?")) {	
-					System.out.println("Entrou no if do Bot2.0");
-					codigoProf = update.getMessage().getText();
-					NovoUsuario.in=2;
-					NovoUsuario reply = new NovoUsuario();
-					reply.linkaProf();
-					
-					
-					}
+				reply.NovoUsuario();		
+				}
 			}else { //possibilita que quando a pessoa manda o novo nome ele nao envie a mensagem de correção (Manda um oi vai)
 			
 			switch (message_text) {
@@ -77,12 +69,19 @@ public class BotApi20 extends TelegramLongPollingBot {
 			case "oi": mensagemPadrao(); break;
 				
 			default:
+				if (z==1) {
 				SendMessage message = new SendMessage() // Create a message object object
 				.setChatId(chat_id)// variavel da linha 21
 				.setText("Manda um \"Oi\" ai vai ");
 				
 				try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
 				break;
+				} else if(z==2) {
+					System.out.println("Entrou no if do Bot2.0");
+					nomeProf = update.getMessage().getText();
+					consult.insereProfissional();
+					z=1;
+				}
 			}
 		}
 
@@ -115,6 +114,7 @@ public class BotApi20 extends TelegramLongPollingBot {
 		
 
 		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
+				
 	}
 
 		

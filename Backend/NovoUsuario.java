@@ -25,6 +25,7 @@ public class NovoUsuario extends TelegramLongPollingBot {
 	static String novoNome = "z293"; // Garante la no conecta que o nome certo vai ser inserido no sql 
 	
 	Conecta consult = new Conecta();
+	AdicionaProf adicio = new AdicionaProf();
 
 	@Override
 	public String getBotUsername() {return null;}
@@ -50,13 +51,15 @@ public class NovoUsuario extends TelegramLongPollingBot {
 			if (result == null) {
 				SendMessage message = new SendMessage()
 						.setChatId(chat_id)
+						.enableMarkdown(true)
 						.setText("Olá! Eu sou o bot responsável pelo programa No Show!\n\n"
 								+ "Estou vendo que você é novo por aqui!\n"
 								+ "Então, sem enrolação, vamos começar?\n"
-								+ "Seu nome aqui no Telegram é:\n\n" 
+								+ "Seu nome aqui no Telegram é:\n\n*" 
 								+ BotApi20.nomeCom 
-								+ "\n\n"
+								+ "*\n\n"
 								+ "Ele esta certinho? Posso usar ele para te cadastrar?");
+				
 				
 				InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
 				List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -83,14 +86,14 @@ public class NovoUsuario extends TelegramLongPollingBot {
 			}
 		break;
 
-		case 2: //Sim
+		/*case 2: //Sim
 				
 			consult.Insere();
 			consult.Consulta();
 			System.out.println("Yep");
 			linkaProf();
 			casonovo= 1;//Receta para o proximo usuario
-			break;
+			break;*/
 		case 3: //Não
 			System.out.println("Nop");
 			if (in == 1) {
@@ -106,7 +109,8 @@ public class NovoUsuario extends TelegramLongPollingBot {
 			novoNome= BotApi20.novoNome;
 			SendMessage message = new SendMessage()
 					.setChatId(chat_id)
-					.setText(novoNome + "\nEsse foi o nome que vc digitou!\nGostaria de usar esse nome para se cadastrar?");
+					.enableMarkdown(true)
+					.setText("*"+novoNome + "*\nEsse foi o nome que vc digitou!\nGostaria de usar esse nome para se cadastrar?");
 			
 			InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
 			List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
@@ -128,26 +132,7 @@ public class NovoUsuario extends TelegramLongPollingBot {
 		}		
 	}
 	public void linkaProf() {
-		System.out.println("O linkaProf iniciou");
-		if (in == 1) {
-		ForceReplyKeyboard replyMarkup = new ForceReplyKeyboard();
-		SendMessage message = new SendMessage()
-				.setChatId(chat_id)
-				.setText("Bom, agora que ja temos o seu cadastro, precisamos te vincular com algum profissional!");
-		
-		SendMessage message1 = new SendMessage()
-				.setChatId(chat_id)
-				.setText("Fala pra mim o codigo que o profissional te passou?")
-				.setReplyMarkup(replyMarkup);
-		
-		try {execute(message);execute(message1);} catch (TelegramApiException e) {e.printStackTrace();}
-		}else if(in==2) {
-			System.out.println("O retorno do linkProf iniciou");
-		
-		consult.insereProfissional();
-		System.out.println(Conecta.resultado);
-		}
-		
+			consult.procuraProf();
 	}
 
 }

@@ -24,6 +24,8 @@ public class Conecta {
 			+ "hostNameInCertificate=*.database.windows.net;" 
 			+ "loginTimeout=30;";
 	
+	AdicionaProf adicionaprof = new AdicionaProf();
+	
 	public static void main(String[] args) {}
 
 	public String ProcuraID() {	
@@ -39,40 +41,28 @@ public class Conecta {
 				long chat = NovoUsuario.chat_id;
 				caso = 2;//Insere
 				String nome = NovoUsuario.nome;
-				select = String.format("INSERT INTO UsuariosTelegram (PrimeiroNome, ID) VALUES ('%s', %d);",nome, chat); 		
+				select = String.format("INSERT INTO UsuariosTelegram (PrimeiroNome, ID) VALUES ('%s', %d);",nome, chat); 
+				Consulta();
 				return select;	
 			}else {
 				long chat = NovoUsuario.chat_id;
 				caso = 2;//Insere
 				String nome = NovoUsuario.novoNome;
-				select = String.format("INSERT INTO UsuariosTelegram (PrimeiroNome, ID) VALUES ('%s', %d);",nome, chat); 		
+				select = String.format("INSERT INTO UsuariosTelegram (PrimeiroNome, ID) VALUES ('%s', %d);",nome, chat);
+				Consulta();
 				return select;	
 			}
 	}
-	public String insereProfissional() {
+	public int insereProfissional() {
 		caso = 1;
 		try {
 			connection = DriverManager.getConnection(connectionString);
-			System.out.println(BotApi20.codigoProf);
-				select = String.format("SELECT NomeProf from Profissional where Codigo LIKE '%s';", BotApi20.codigoProf); //Procura se o codigo do prof existe na tabela
-				System.out.println("Seleciona "+select);
-				selectSql = select;
-				statement = connection.createStatement();
-				resultSet = statement.executeQuery(selectSql);
-			
-				while (resultSet.next()) {
-		            	resultado = resultSet.getString("NomeProf");
-		            	System.out.println("aaaa"+resultado);
-		            	
-		        if (!resultado.equals(null)) {    	
-		        	select = String.format("UPDATE [dbo].[UsuariosTelegram] SET Profissional = '%s' WHERE ID = '%d';",BotApi20.codigoProf, NovoUsuario.chat_id);
-		        	statement = connection.createStatement();
-		        	insere = statement.executeUpdate(select);
-		        	System.out.println(insere);
-		       }else if (resultado.equals(null)){
-		    	   System.out.println("deu nulo");
-		       }
-			}
+			System.out.println(BotApi20.nome);
+				select = String.format("UPDATE [dbo].[UsuariosTelegram] SET Profissional = '%s' WHERE ID = '%d';",BotApi20.nomeProf, NovoUsuario.chat_id);
+	        	statement = connection.createStatement();
+	        	insere = statement.executeUpdate(select);
+	        	System.out.println(insere);
+		
 		} catch (Exception e) {e.printStackTrace();
 		} finally {
 		// Close the connections after the data has been handled.
@@ -83,17 +73,23 @@ public class Conecta {
 		if (connection != null)
 			try {connection.close();} catch (Exception e) {}
 		}
-		return select;	
+		return insere;	
 		
+	}
+	public void procuraProf() { //Procura na tabela profissionais e seleciona todos
+		caso = 3; 
+		selectSql = String.format("SELECT NomeProf from Profissional");
+		Consulta();
 	}
 	
 	public void Consulta() {
 		try {
 			connection = DriverManager.getConnection(connectionString);
-			selectSql = select;
+			//selectSql = select;
 			
 		switch (caso) {
 			case 1: //Procura
+				selectSql = select;
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(selectSql);
 
@@ -106,12 +102,13 @@ public class Conecta {
 				break;
 
 			case 2: // Insere
+				selectSql = select;
 				statement = connection.createStatement();
 				insere = statement.executeUpdate(selectSql);
 				System.out.println(insere);
 				break;
 			
-			/*case 3: //Procura Profissionais. Cancelado
+			case 3: //Insere os profissionais no array e chama o adiciona prof 
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(selectSql);
 				while (resultSet.next()) {
@@ -121,7 +118,7 @@ public class Conecta {
 				System.out.println(profissionais);
 				adicionaprof.AdicionaProf();
 				profissionais.clear();
-				break; */
+				break; 
 			}			
 		} catch (Exception e) 
 			{e.printStackTrace();
