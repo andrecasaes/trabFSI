@@ -1,9 +1,11 @@
+import java.sql.SQLException;
+
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.TelegramBotsApi;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
 public class Main {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws SQLException {
 		// Initialize Api Context
 		ApiContextInitializer.init();
 

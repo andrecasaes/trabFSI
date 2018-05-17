@@ -15,16 +15,10 @@ public class Conecta {
 	Statement statement = null;
 	ResultSet resultSet = null;
 	String selectSql;
-	String connectionString= "jdbc:sqlserver://localhost:1433;" 
-			+ "database=master;" 
-			+ "user=andre;"
-			+ "password=andre133;" 
-			+ "encrypt=false;" 
-			+ "trustServerCertificate=false;"
-			+ "hostNameInCertificate=*.database.windows.net;" 
-			+ "loginTimeout=30;";
+	
 	
 	AdicionaProf adicionaprof = new AdicionaProf();
+	
 	
 	public static void main(String[] args) {}
 
@@ -35,7 +29,7 @@ public class Conecta {
 		select = String.format("SELECT * from UsuariosTelegram WHERE ID=%d", chat); 		
 		return select;	
 	}
-	public String Insere() {//Cadastro	
+	public String Insere() { //Cadastro	
 		
 			if (NovoUsuario.novoNome.equals("z293")) { //diferencia se é um novo nome ou é padrao
 				long chat = NovoUsuario.chat_id;
@@ -53,15 +47,17 @@ public class Conecta {
 				return select;	
 			}
 	}
-	public int insereProfissional() {
+	public int insereProfissional() { // insere no cadastro do cliente a coluna de profissional
 		caso = 1;
 		try {
-			connection = DriverManager.getConnection(connectionString);
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root","");
 			System.out.println(BotApi20.nome);
-				select = String.format("UPDATE [dbo].[UsuariosTelegram] SET Profissional = '%s' WHERE ID = '%d';",BotApi20.nomeProf, NovoUsuario.chat_id);
+				select = String.format("UPDATE `usuariostelegram` SET Profissional = '%s' WHERE ID = %d;",BotApi20.nomeProf, NovoUsuario.chat_id);
 	        	statement = connection.createStatement();
 	        	insere = statement.executeUpdate(select);
 	        	System.out.println(insere);
+	        	NovoUsuario novo =  new NovoUsuario();
+	        	novo.cadastroFinalizado(); //Manda a mensagem de cadastro finalizado
 		
 		} catch (Exception e) {e.printStackTrace();
 		} finally {
@@ -84,7 +80,7 @@ public class Conecta {
 	
 	public void Consulta() {
 		try {
-			connection = DriverManager.getConnection(connectionString);
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root","");
 			//selectSql = select;
 			
 		switch (caso) {

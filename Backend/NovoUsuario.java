@@ -134,5 +134,16 @@ public class NovoUsuario extends TelegramLongPollingBot {
 	public void linkaProf() {
 			consult.procuraProf();
 	}
+	
+	public void cadastroFinalizado() {
+		SendMessage message = new SendMessage()
+				.setChatId(chat_id)
+				.enableMarkdown(true)
+				.setText("Ufa! Finalmente acabamos o seu cadastro!\n"
+						+ "Agora o seu profissional já consegue te achar para marcar consultas.\n\n"
+						+ "*Você não precisa mais fazer nada aqui!*\n\n"
+						+ "É so aguardar que quando você tiver consulta te avisaremos *:)* ");
+		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
+}
 
 }
