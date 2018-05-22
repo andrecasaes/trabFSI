@@ -23,13 +23,14 @@ public class Conecta {
 	public static void main(String[] args) {}
 
 	public String ProcuraID() {	
-		
+		System.out.println("Iniciou ProcuraID em Conecta!");
 		long chat = NovoUsuario.chat_id;	
 		caso = 1;//Procura
 		select = String.format("SELECT * from UsuariosTelegram WHERE ID=%d", chat); 		
 		return select;	
 	}
 	public String Insere() { //Cadastro	
+		System.out.println("Iniciou Insere em Conecta!");
 		
 			if (NovoUsuario.novoNome.equals("z293")) { //diferencia se é um novo nome ou é padrao
 				long chat = NovoUsuario.chat_id;
@@ -48,6 +49,7 @@ public class Conecta {
 			}
 	}
 	public int insereProfissional() { // insere no cadastro do cliente a coluna de profissional
+		System.out.println("Iniciou insereProfissional em Conecta!");
 		caso = 1;
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root","");
@@ -73,18 +75,22 @@ public class Conecta {
 		
 	}
 	public void procuraProf() { //Procura na tabela profissionais e seleciona todos
+		System.out.println("Iniciou procuraProf em Conecta!");
 		caso = 3; 
 		selectSql = String.format("SELECT NomeProf from Profissional");
 		Consulta();
 	}
 	
 	public void Consulta() {
+		System.out.println("Iniciou consulta em Conecta!");
+		resultado=null;
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root","");
 			//selectSql = select;
 			
-		switch (caso) {
+		switch (caso) {	
 			case 1: //Procura
+				System.out.println("Iniciou caso 1 em Conecta!");
 				selectSql = select;
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(selectSql);
@@ -92,12 +98,13 @@ public class Conecta {
 				while (resultSet.next()) {
 		            System.out.println(resultSet.getString("PrimeiroNome"));
 		            resultado = resultSet.getString("PrimeiroNome");
-		            System.out.println(resultado);
+		            System.out.println("Resultado em caso 1 em consulta "+resultado);
 		            z = 2;
 		        }
 				break;
 
 			case 2: // Insere
+				System.out.println("Iniciou caso 2 em Conecta!");
 				selectSql = select;
 				statement = connection.createStatement();
 				insere = statement.executeUpdate(selectSql);
@@ -105,6 +112,7 @@ public class Conecta {
 				break;
 			
 			case 3: //Insere os profissionais no array e chama o adiciona prof 
+				System.out.println("Iniciou caso 3 em Conecta!");
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(selectSql);
 				while (resultSet.next()) {
@@ -126,6 +134,7 @@ public class Conecta {
 				try {statement.close();} catch (Exception e) {}
 			if (connection != null)
 				try {connection.close();} catch (Exception e) {}
+			System.out.println("Fechou a conexão no consulta em conecta!");
 			}
 
 	}

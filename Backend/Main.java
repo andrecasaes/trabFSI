@@ -12,11 +12,12 @@ public class Main {
 		TelaTeste tela = new TelaTeste();
 		// Instantiate Telegram Bots API
 		TelegramBotsApi botsApi = new TelegramBotsApi();
+		MandaMSG bot = new MandaMSG();
 
 		// Register our bot
 		try {
 			botsApi.registerBot(new BotApi20());
-			tela.visu();
+			bot.MandaMSG();	
 		} catch (TelegramApiException e) {
 			e.printStackTrace();
 		}

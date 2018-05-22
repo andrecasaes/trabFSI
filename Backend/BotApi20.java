@@ -63,8 +63,8 @@ public class BotApi20 extends TelegramLongPollingBot {
 			
 			switch (message_text) {
 			
-			case "/Start": novo.NovoUsuario(); break;
-			case "/start": novo.NovoUsuario(); break;
+			case "/Start": novo.NovoUsuario(); novo.casonovo=1; break;
+			case "/start": novo.NovoUsuario(); novo.casonovo=1; break;
 			case "Oi": mensagemPadrao(); break;
 			case "oi": mensagemPadrao(); break;
 				

@@ -45,8 +45,9 @@ public class NovoUsuario extends TelegramLongPollingBot {
 			Conecta consulta = new Conecta();	
 			consulta.ProcuraID();
 			consulta.Consulta();
-			
+			System.out.println("Entrou no caso 1 em NovoUsuario!");
 			String result =  Conecta.resultado;
+			System.out.println(result);
 			
 			if (result == null) {
 				SendMessage message = new SendMessage()
@@ -73,9 +74,10 @@ public class NovoUsuario extends TelegramLongPollingBot {
 				markupInline.setKeyboard(rowsInline);
 				message.setReplyMarkup(markupInline);
 				
-				try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}			
+				try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
+				System.out.println("Dentro do if result == null");
 				
-			}else {
+			}else if (result != null){
 				System.out.println("Já cadastrado");
 				
 				SendMessage message = new SendMessage()
