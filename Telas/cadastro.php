@@ -8,7 +8,7 @@
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Cadastro</h2>
-    <form method="post" action="banco.php">
+    <form name = "Cadastro" method="post" onsubmit="return validateCadastro()" action="banco.php">
         <table>
             <tr>
                 <td>Nome completo:</td>
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td>Profissão:</td>
-                <td style="text-align: left;"><select name="Profissão">
+                <td style="text-align: left;"><select name="Profissao">
                         <option value="null">--------</option>
                         <option value="Cabeleireiro/a">Cabeleireiro</option>
                         <option value="Dentista">Dentista</option>

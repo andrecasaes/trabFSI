@@ -42,11 +42,11 @@
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Menu</h2>
-    <button id="novaConsultaBotao" class="button">Nova Consulta</button>
-    <div id="novaConsultaModal" class="modal">
+    <button id="myBtn" class="button">Nova Consulta</button>
+    <div id="myModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
-            <form name="novaConsulta" method="get">
+            <form name="novaConsulta" method="post" onsubmit="return validateConsulta()" action="menu.html">
             <table>
                 <tr>
                     <td>Cliente:</td>
@@ -67,71 +67,60 @@
                     <input type="text" name="minutosD" size="2"> min</td>
                 </tr>
             </table>
-            <button class="button" type="reset">Limpar<br></button>
+            <input class="button" type="submit" value="Salvar"><br>
+            <input class="button" type="reset" value="Limpar">
         </form>
-        <button class="button" id="salvar" type="submit" form="novaConsulta">Salvar</button>
         </div>
     </div>
-    <div id="consultas"></div>
 <script type="text/javascript">
 // Get the modal
-var novaConsultaModal = document.getElementById("novaConsultaModal");
+var modal = document.getElementById('myModal');
 
 // Get the button that opens the modal
-var novaConsultaBotao = document.getElementById("novaConsultaBotao");
+var btn = document.getElementById("myBtn");
 
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 
 // When the user clicks on the button, open the modal 
-novaConsultaBotao.onclick = function() {
-    novaConsultaModal.style.display = "block";
+btn.onclick = function() {
+    modal.style.display = "block";
 }
 
 // When the user clicks on <span> (x), close the modal
 span.onclick = function() {
-    novaConsultaModal.style.display = "none";
+    modal.style.display = "none";
 }
 
 // When the user clicks anywhere outside of the modal, close it
 window.onclick = function(event) {
-    if (event.target == novaConsultaModal) {
-        novaConsultaModal.style.display = "none";
+    if (event.target == modal) {
+        modal.style.display = "none";
     }
 }
-
-var consultas = document.getElementById("consultas");
-var salvar = document.getElementById("salvar");
-
-salvar.onclick = function() {
-	var cliente = document.forms["novaConsulta"]["cliente"].value;
-    var data = document.forms["novaConsulta"]["data"].value;
-    var horas = document.forms["novaConsulta"]["horas"].value;
-    var minutos = document.forms["novaConsulta"]["minutos"].value;
+function validateConsulta() {
+        var cliente = document.forms["novaConsulta"]["cliente"].value;
+        var data = document.forms["novaConsulta"]["data"].value;
+        var horas = document.forms["novaConsulta"]["horas"].value;
+        var minutos = document.forms["novaConsulta"]["minutos"].value;
         
-    if (cliente == "") {
-        alert("Por favor, digite o nome do cliente.");
-        return false;
-    } else if (data == "") {
-        alert("Por favor, digite a data.");
-        return false;
-    } else if (horas == "") {
-        alert("Por favor, digite a hora de início da consulta.");
-        return false;
-    } else if (minutos == "") {
-        alert("Por favor, digite os minutos.");
-        return false;
-    } else {
-    	var avisar = document.createElement("input");
-		avisar.type = "button";
-		avisar.value = "Avisar!";
-		document.body.appendChild(avisar);
-		novaConsultaModal.style.display = "none";
-	}
-	document.forms["novaConsulta"].submit();
-	return false;
-}
-
+        if (cliente == "") {
+            alert("Por favor, digite o nome do cliente.");
+            return false;
+        }
+        if (data == "") {
+            alert("Por favor, digite a data.");
+            return false;
+        }
+        if (horas == "") {
+            alert("Por favor, digite a hora de início da consulta.");
+            return false;
+        }
+        if (minutos == "") {
+            alert("Por favor, digite os minutos.");
+            return false;
+        }
+    }
 </script>
 </body>
 </html>
