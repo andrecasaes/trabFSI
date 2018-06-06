@@ -13,9 +13,10 @@ $cliente = $_POST['cliente'];
 $data = $_POST['data'];
 $horas = $_POST['horas'];
 $minutos = $_POST['minutos'];
+$id = "SELECT  `ID` FROM `usuariostelegram` WHERE PrimeiroNome = 'lais'";
 
-$sql = "INSERT INTO todasconsulta (nomeCliente, Data, Hora, Minuto)
-VALUES ('$cliente', '$data', '$horas', '$minutos');";
+$sql = "INSERT INTO todasconsulta (nomeCliente, ID, Data, Hora, Minuto)
+VALUES ('$cliente', '$id', '$data', '$horas', '$minutos');";
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {

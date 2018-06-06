@@ -50,7 +50,11 @@
             <table>
                 <tr>
                     <td>Cliente:</td>
-                    <td><input type="text" name="cliente"></td>
+                    <td style="text-align: left;"><select name="Cliente" id="select">
+                        <option value="AAAAAAA">-AAAAA-</option>
+                        <option value="FODASE">FODASE</option>
+                        <option value="MORTE">MORTE</option>
+                	</select></td>
                 </tr>
                 <tr>
                     <td>Data:</td>
@@ -63,7 +67,7 @@
                 </tr>
             </table>
             <button class="button" type="reset">Limpar<br></button>
-        <input type="submit" id="salvar" value="Salvar" >
+        <input type="submit" id="salvar" value="Salvar" class="button">
         </form>
  
         </div>
@@ -92,75 +96,69 @@ window.onclick = function(event) {
     }
 }
 
+jQuery(document).ready(function(){
+	jQuery('#ajax_form').submit(function(){
 
-    jQuery(document).ready(function(){
-        jQuery('#ajax_form').submit(function(){
-      
+		var cliente = document.forms["novaConsulta"]["Cliente"].value;
+    	var data = document.forms["novaConsulta"]["data"].value;
+    	var horas = document.forms["novaConsulta"]["horas"].value;
+    	var minutos = document.forms["novaConsulta"]["minutos"].value;
         
-            var cliente = document.forms["novaConsulta"]["cliente"].value;
-    var data = document.forms["novaConsulta"]["data"].value;
-    var horas = document.forms["novaConsulta"]["horas"].value;
-    var minutos = document.forms["novaConsulta"]["minutos"].value;
+    	if (cliente == "") {
+        	alert("Por favor, digite o nome do cliente.");
+        	return false;
+    	} else if (data == "") {
+        	alert("Por favor, digite a data.");
+        	return false;
+    	} else if (horas == "") {
+        	alert("Por favor, digite a hora de início da consulta.");
+        	return false;
+    	} else if (minutos == "") {
+        	alert("Por favor, digite os minutos.");
+        	return false;
+    	} else {
         
-    if (cliente == "") {
-        alert("Por favor, digite o nome do cliente.");
-        return false;
-    } else if (data == "") {
-        alert("Por favor, digite a data.");
-        return false;
-    } else if (horas == "") {
-        alert("Por favor, digite a hora de início da consulta.");
-        return false;
-    } else if (minutos == "") {
-        alert("Por favor, digite os minutos.");
-        return false;
-    } else {
-        
-        var caixa = document.createElement("div");
-        caixa.style.border = "2px solid #05365b";
+        	var caixa = document.createElement("div");
+        	caixa.style.border = "2px solid #05365b";
 
-        var avisar = document.createElement("input");
-        avisar.type = "button";
-        avisar.value = "Avisar!";
-        avisar.className = "button";
+        	var info = document.createElement("form");
+        	info.id = "form2";
+        	info.appendChild(document.createTextNode(cliente));
+        	info.appendChild(document.createElement("br"));
+        	info.appendChild(document.createTextNode("Data: " + data));
+        	info.appendChild(document.createElement("br"));
+        	info.appendChild(document.createTextNode(horas + ":" + minutos));
 
-        var cancelar = document.createElement("input");
-        cancelar.type = "button";
-        cancelar.value = "Cancelar!";
-        cancelar.className = "button";
+        	var avisar = document.createElement("input");
+        	avisar.type = "submit";
+        	avisar.value = "Avisar!";
+        	avisar.className = "button";
+        	avisar.form = "info";
 
-        var info = document.createElement("p");
-        info.appendChild(document.createTextNode(cliente));
-        info.appendChild(document.createElement("br"));
-        info.appendChild(document.createTextNode("Data: " + data));
-        info.appendChild(document.createElement("br"));
-        info.appendChild(document.createTextNode(horas + ":" + minutos));
+        	var cancelar = document.createElement("input");
+        	cancelar.type = "button";
+        	cancelar.value = "Cancelar!";
+        	cancelar.className = "button";
         
-        caixa.appendChild(info);
-        caixa.appendChild(avisar);
-        caixa.appendChild(cancelar);
-        document.body.appendChild(caixa);
-        novaConsultaModal.style.display = "none";
-
-        //document.forms["novaConsulta"].reset();
+	        caixa.appendChild(info);
+	        caixa.appendChild(avisar);
+	        caixa.appendChild(cancelar);
+	        document.body.appendChild(caixa);
+	        novaConsultaModal.style.display = "none";
         
-      var dados = jQuery( this ).serialize();
-            jQuery.ajax({
-                type: "POST",
-                url: "bancoConsulta.php",
-                data: dados,
-                success: function( data )
-                {
-                    alert( data );
-                }
-            });
-    
+	    	var dados = jQuery(this).serialize();
+	    	jQuery.ajax({
+	    		type: "POST",
+	    		url: "bancoConsulta.php",
+	    		data: dados,
+	    		success: function(data) {
+	        		alert(data);
+	    		}
+	    	}); 
     }
-
-    return false;        
-        });
+    	return false;        
     });
-
+});
 </script>
 
 </body>

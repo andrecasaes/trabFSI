@@ -1,56 +1,43 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="pt-br" charset="utf-8">
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" href="forms.css">
 </head>
-<style>
-body {
-    text-align: center;
-}
-
-.logo {
-    background-color: rgb(255, 200, 163);
-    width: 100%; 
-    padding: 5px;
-    color: rgb(255, 103, 0);
-    letter-spacing: 5px;
-    font-family: "Verdana", sans-serif;
-    position: fixed;
-    z-index: 10;
-}
-
-a {
-    color: blue;
-    text-decoration: underline;
-}
-
-.titulo {
-    padding-top: 100px;
-}
-
-.elementoForm {
-}
-
-.botao {
-    background-color: rgb(187, 76, 0);
-    color: rgb(255, 200, 163);
-    margin-left: 45%;
-    margin-right: 45%;
-}
-
-</style>
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Login</h2>
-    <form class = "elementoForm">
-        Usuario:
-        <input type="text" name="usuario"><br>
-        Senha:
-        <input type="text" name="senha">
+    <form name = "Login" method="post" onsubmit="return validateForm()" action="ope.php">
+        <table>
+            <tr>
+                <td>Usuário:</td>
+                <td><input type="text" name="usuario" placeholder="Usuário"></td>
+            </tr>
+            <tr>
+                <td>Senha:</td>
+                <td><input type="password" name="senha" placeholder="Senha"></td>
+            </tr>
+        </table>
+        <input class="button" type="submit" value="Entrar">
     </form>
-    <div class = "botao"><h3>Entrar</h3></div>
-    <a>Esqueci minha senha</a>
-    <div class = "botao"><<h3>Quero me cadastrar</h3></div>
+    <button class="button" onclick="window.location='cadastro.html'">Cadastrar</button><br>
+    <button class="buttonEsqueci" onclick="window.location='esqueciSenha.html'">Esqueci minha senha</button>
+<script type="text/javascript">
+    function validateForm() {
+        var usuario = document.forms["Login"]["usuario"].value;
+        var senha = document.forms["Login"]["senha"].value;
+        
+        if (usuario == "") {
+            alert("Por favor, informe um nome de usuário.");
+            return false;
+        }
+        if (senha == "") {
+            alert("Por favor, digite sua senha.");
+            return false;
+        }
+        
+    }
+</script>
 </body>
 </html>
