@@ -8,7 +8,7 @@
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Cadastro</h2>
-    <form name = "Cadastro" method="post" onsubmit="return validateCadastro()" action="banco.php">
+    <form name ="Cadastro" method="post" onsubmit="return validateCadastro();" action="banco.php">
         <table>
             <tr>
                 <td>Nome completo:</td>

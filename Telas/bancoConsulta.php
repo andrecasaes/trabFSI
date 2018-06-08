@@ -9,14 +9,19 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 if (!$conn) {
     die("Connection failed: " . $conn->connect_error);
 } 
+
 $cliente = $_POST['cliente'];
 $data = $_POST['data'];
 $horas = $_POST['horas'];
 $minutos = $_POST['minutos'];
 $id = "SELECT  `ID` FROM `usuariostelegram` WHERE PrimeiroNome = 'lais'";
+if ($conn->query($id) === TRUE) {
+    echo "New record created successfully";
+} else {
+    echo "Error: " . $id . "<br>" . "$conn->error";
+}
 
-$sql = "INSERT INTO todasconsulta (nomeCliente, ID, Data, Hora, Minuto)
-VALUES ('$cliente', '$id', '$data', '$horas', '$minutos');";
+$sql = "INSERT INTO todasconsulta (nomeCliente, ID, Data, Hora, Minuto) VALUES ('$cliente', '$id', '$data', '$horas', '$minutos');";
 if ($conn->query($sql) === TRUE) {
     echo "New record created successfully";
 } else {

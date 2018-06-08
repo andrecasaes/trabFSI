@@ -22,9 +22,10 @@ $a = "SELECT  `PrimeiroNome` FROM `usuariostelegram` WHERE Profissional = '$loga
 $primeiroNome = explode(" ", $a);
 
 if ($conn->query($a) === TRUE) {
-    echo $primeiroNome[$index];
+    $i = count($primeiroNome);
+	echo $i;
 } else {
-    echo "Error: " . $a . "<br>" . "$conn->error";
+    echo "Error: " . $a . "$conn->error";
 }
 
 //$num = pg_num_rows($primeiroNome);

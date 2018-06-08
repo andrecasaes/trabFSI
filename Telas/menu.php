@@ -50,11 +50,7 @@
             <table>
                 <tr>
                     <td>Cliente:</td>
-                    <td style="text-align: left;"><select name="Cliente" id="select">
-                        <option value="AAAAAAA">-AAAAA-</option>
-                        <option value="FODASE">FODASE</option>
-                        <option value="MORTE">MORTE</option>
-                	</select></td>
+                    <td><input type="text" name="Cliente"></td>
                 </tr>
                 <tr>
                     <td>Data:</td>
@@ -96,6 +92,17 @@ window.onclick = function(event) {
     }
 }
 
+//aaahhh deu errado e eh isso mano
+//var quantosClientes = $.post("quantosClientes.php", {i: "null"}, function(num){
+//	var clienteDoProf = $.post("pegaCliente.php", {index: num}, function(nome){
+//		var option = document.createElement("option");
+//		option.text = nome;
+//		option.value = nome;
+//		var select = document.getElementById("select");
+//		select.appendChild(option);
+//	});
+//});
+
 jQuery(document).ready(function(){
 	jQuery('#ajax_form').submit(function(){
 
@@ -123,6 +130,12 @@ jQuery(document).ready(function(){
 
         	var info = document.createElement("form");
         	info.id = "form2";
+        	info.method = "post";
+        	var sla = document.createElement("input");
+        	sla.type = "checkbox";
+        	sla.value = cliente;
+        	sla.name = "sla";
+        	info.appendChild(sla);
         	info.appendChild(document.createTextNode(cliente));
         	info.appendChild(document.createElement("br"));
         	info.appendChild(document.createTextNode("Data: " + data));
@@ -145,6 +158,21 @@ jQuery(document).ready(function(){
 	        caixa.appendChild(cancelar);
 	        document.body.appendChild(caixa);
 	        novaConsultaModal.style.display = "none";
+
+	
+				jQuery('#form2').submit(function(){
+	    			var dados = jQuery(this).serialize();
+	    				jQuery.ajax({
+	    					type: "POST",
+	    					url: "avisar.php",
+	    					data: dados,
+	    					success: function(data) {
+	        					alert(data);
+	    					}
+	    				});
+	    				return false;
+	    		});         
+			
         
 	    	var dados = jQuery(this).serialize();
 	    	jQuery.ajax({
@@ -152,13 +180,13 @@ jQuery(document).ready(function(){
 	    		url: "bancoConsulta.php",
 	    		data: dados,
 	    		success: function(data) {
-	        		alert(data);
 	    		}
 	    	}); 
     }
     	return false;        
     });
 });
+
 </script>
 
 </body>
