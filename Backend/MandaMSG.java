@@ -22,7 +22,7 @@ public class MandaMSG extends TelegramLongPollingBot {
 	int[] arID;
 	static ArrayList<Integer> arrayid = new ArrayList<>();
 	Date dt = new Date(0);
-	Time tm = new Time(0);
+	int hr,min = 0;
 	int resultado = 0;
 	int insere = 0;
 	String nomeCliente= null;
@@ -46,9 +46,10 @@ public class MandaMSG extends TelegramLongPollingBot {
 					nomeCliente = resultSet.getString("nomeCliente");
 					nomeProf = resultSet.getString("Profissional");
 					dt = resultSet.getDate("Data");
-					tm = resultSet.getTime("Horario");
+					hr = resultSet.getInt("Hora");
+					min = resultSet.getInt("Minuto");
 					System.out.println(dt);
-					System.out.println(tm);
+					System.out.println(hr+" "+min);
 					System.out.println("BAIXO " + ID);
 					enviaMSG();
 					select = String.format("DELETE FROM `mandaconsulta` WHERE ID = '%d'", ID) ;//Apaga a linha dos que ja mandou msg
@@ -71,7 +72,7 @@ public class MandaMSG extends TelegramLongPollingBot {
 		long chatId = ID;
 		String textinho = String.format("Eae %s, tudo bem?\n"
 				+ "%s, gostaria de saber se vc irá na consulta no dia\n*"
-				+dt+"* as *"+tm+"*", nomeCliente, nomeProf);
+				+dt+"* as *"+hr+":"+min+"*", nomeCliente, nomeProf);
 		
 		SendMessage manda = new SendMessage() // Create a message object object
 				.setChatId(chatId)

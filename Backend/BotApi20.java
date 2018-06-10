@@ -29,6 +29,8 @@ public class BotApi20 extends TelegramLongPollingBot {
 	static String novoNome;
 	static String nomeProf;
 	static int z=1;
+	static int t=1;
+	static String textomsg;
 	
 	NovoUsuario novo = new NovoUsuario();
 	Conecta consult = new Conecta();
@@ -65,14 +67,18 @@ public class BotApi20 extends TelegramLongPollingBot {
 			
 			case "/Start": novo.NovoUsuario(); novo.casonovo=1; break;
 			case "/start": novo.NovoUsuario(); novo.casonovo=1; break;
-			case "Oi": mensagemPadrao(); break;
-			case "oi": mensagemPadrao(); break;
+			case "Oi":t=1; mensagemPadrao(); break;
+			case "oi":t=1; mensagemPadrao(); break;
+			case "ping":t=2; mensagemPadrao(); break;
+			case "Ping":t=2; mensagemPadrao(); break;
+			case "pong":t=3; mensagemPadrao(); break;
+			case "Pong":t=3; mensagemPadrao(); break;
 				
 			default:
 				if (z==1) {
 				SendMessage message = new SendMessage() // Create a message object object
-				.setChatId(chat_id)// variavel da linha 21
-				.setText("Manda um \"Oi\" ai vai ");
+				.setChatId(chat_id)
+				.setText("Sou de SI, não sei conversar =(\nMas estou me esforçando para aumentar minhas relações interpessoais heheh\nFala oi pra mim?");
 				
 				try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
 				break;
@@ -93,26 +99,18 @@ public class BotApi20 extends TelegramLongPollingBot {
 	}
 	
 	public void mensagemPadrao() {
+		if (t==1) {
+			textomsg = "Oie\nViu? agora eu consigo falar responder o oi das pessoas.... Estou evoluindo...\n"
+					+ "Eu sei tambem jogar um jogo super legal....\nDigita ping ai =)";
+		}else if(t==2) {
+			textomsg = "Pong.\n"
+					+ "Agora você.";
+		}else if(t==3) {
+			textomsg = "Errou feio, errou rude!\n";
+		}
 		SendMessage message = new SendMessage() // Create a message object object
 				.setChatId(chat_id)
-				.setText("Bom dia!\nGostaria de saber se vc irá amanhã na consulta ");
-		
-		
-		InlineKeyboardMarkup markupInline = new InlineKeyboardMarkup();
-		List<List<InlineKeyboardButton>> rowsInline = new ArrayList<>();
-		List<InlineKeyboardButton> rowInline = new ArrayList<>();
-
-		rowInline.add(new InlineKeyboardButton().setText("Vou sim").setCallbackData("Sim"));
-		rowInline.add(new InlineKeyboardButton().setText("Vai te catar, vou não").setCallbackData("Nao"));
-		// Set the keyboard to the markup
-		rowsInline.add(rowInline);
-		// Add it to the message
-		markupInline.setKeyboard(rowsInline);
-		message.setReplyMarkup(markupInline);
-		
-		
-		
-
+				.setText(textomsg);
 		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
 				
 	}
