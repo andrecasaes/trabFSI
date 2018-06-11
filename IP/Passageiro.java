@@ -6,10 +6,6 @@ package onibus;
 
 public class Passageiro {
     
-    Veiculo onibus = new Veiculo();
-    Linha linha = new Linha();
-    Parada parada = new Parada();
-    
     //atributos
     
     private boolean necessidadeEspecial; //true = sim e false = nao
@@ -21,11 +17,7 @@ public class Passageiro {
     private int origem; //ponto de partida
     private int destino; //ponto de chegada
     
-    //construtores
-
-    public Passageiro() {
-        
-    }
+    //construtor
 
     public Passageiro(boolean necessidadeEspecial, int origem, int destino) {
         
@@ -91,21 +83,6 @@ public class Passageiro {
 
     public void setDestino(int destino) {
         this.destino = destino;
-    }
-    
-    //metodos dos passageiros 
-    
-    public void embarcar() {
-        if(onibus.getCapacidadeMax() != onibus.getPassageiros()) {
-            onibus.setPassageiros(onibus.getPassageiros() + 1);
-        }
-    }
-            
-    //pretendemos linkar com o veiculo (ex.: quando um passageiro embarcar, o numero de passageiros no onibus aumentara)
-    public void desembarcar() {
-        if(onibus.getPassageiros() > 0) {
-            onibus.setPassageiros(onibus.getPassageiros() - 1);
-        }
     }
     
 }
