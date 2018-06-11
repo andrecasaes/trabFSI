@@ -2,9 +2,7 @@ package onibus;
 
 public class Veiculo {
     
-    Passageiro passageiro = new Passageiro();
-    Linha linha = new Linha();
-    Parada parada = new Parada();
+    //atributos:
     
     //espaço e velocidade do veiculo
     private double velocidade; //em km/h
@@ -36,10 +34,6 @@ public class Veiculo {
     assentos = 30
     
     */
-
-    public Veiculo() {
-        
-    }
 
     public Veiculo(String tamanho, boolean adaptacao) {
         
