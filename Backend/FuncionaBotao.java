@@ -11,12 +11,14 @@ import org.telegram.telegrambots.exceptions.TelegramApiException;
 public class FuncionaBotao extends TelegramLongPollingBot {
 	String call_data;
 	long message_id;
-	long chat_id;
+	static long chat_id;
 	EditMessageText new_message;
 	String answer;
+	static int confConsul=0;
 	
 	NovoUsuario inicia = new NovoUsuario();
 	Conecta consult = new Conecta();
+	envioAutomatico en = new envioAutomatico();
 
 	@Override
 	public void onUpdateReceived(Update update) {
@@ -32,14 +34,21 @@ public class FuncionaBotao extends TelegramLongPollingBot {
 		
 		switch (call_data) {
 		case "Sim":
-			answer = "De boas então, te vejo amanhã";
+			answer = "De boas então, vou avisar o profissional!\n"
+					+ "Até a proxima!";
 			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);
-			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}			
+			confConsul = 1;
+			en.envioRespProf();
+			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
 		break;
 			
 		case "Nao":
-			answer = "Puts, blz vou desmarcar então";
+			answer = "Puts =/\n"
+					+ "vou avisar o profissional que você nao vai então.\n"
+					+ "Até a próxima!";
 			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);
+			confConsul = 2;
+			en.envioRespProf();
 			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
 		break;
 			
@@ -60,7 +69,15 @@ public class FuncionaBotao extends TelegramLongPollingBot {
 			inicia.NovoUsuario();
 			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
 		break;
-
+		
+		case "profissional":
+			answer = "Olá!\n" + 
+					"Estou muito feliz que esteja usando o nosso programa para deixar a sua rotina mais facil!\n"
+					+ "Agora só falta mais um passo para completar seu cadastro!";
+			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);		
+			consult.procuraProfSemID();
+			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
+		break;
 		default:
 			break;
 		}

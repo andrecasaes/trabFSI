@@ -10,6 +10,7 @@ public class Conecta {
 	int caso;
 	int insere = 0;
 	static ArrayList<String> profissionais =  new ArrayList<>();
+	static ArrayList<String> usuarios =  new ArrayList<>();
 	int z = 1;
 	Connection connection = null;
 	Statement statement = null;
@@ -18,6 +19,7 @@ public class Conecta {
 	
 	
 	AdicionaProf adicionaprof = new AdicionaProf();
+	adicionaIDProf addID = new adicionaIDProf();
 	
 	
 	public static void main(String[] args) {}
@@ -61,15 +63,10 @@ public class Conecta {
 	        	NovoUsuario novo =  new NovoUsuario();
 	        	novo.cadastroFinalizado(); //Manda a mensagem de cadastro finalizado
 		
-		} catch (Exception e) {e.printStackTrace();
-		} finally {
-		// Close the connections after the data has been handled.
-		if (resultSet != null)
-			try {resultSet.close();} catch (Exception e) {}
-		if (statement != null)
-			try {statement.close();} catch (Exception e) {}
-		if (connection != null)
-			try {connection.close();} catch (Exception e) {}
+		} catch (Exception e) {e.printStackTrace();} finally {
+		if (resultSet != null)try {resultSet.close();} catch (Exception e) {}
+		if (statement != null)try {statement.close();} catch (Exception e) {}
+		if (connection != null)try {connection.close();} catch (Exception e) {}
 		}
 		return insere;	
 		
@@ -78,6 +75,48 @@ public class Conecta {
 		System.out.println("Iniciou procuraProf em Conecta!");
 		caso = 3; 
 		selectSql = String.format("SELECT NomeProf from Profissional");
+		Consulta();
+	}
+	public void procuraProfSemID() { //Procura na tabela profissionais e seleciona todos
+		System.out.println("Iniciou procuraProf em Conecta!");
+		caso = 4; 
+		selectSql = String.format("SELECT NomeProf from Profissional where IDProf = '0'");
+		Consulta();
+	}
+	public int insereIDProfissional() { // insere no cadastro do cliente a coluna de profissional
+		System.out.println("Iniciou insereIDProfissional em Conecta!");
+		caso = 1;
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root","");
+			System.out.println(BotApi20.nome);
+				select = String.format("UPDATE `profissional` SET IDProf = '%d' WHERE NomeProf = '%s'", NovoUsuario.chat_id, BotApi20.nomeProf);
+	        	statement = connection.createStatement();
+	        	insere = statement.executeUpdate(select);
+	        	System.out.println(insere);
+	        	adicionaIDProf adiID = new adicionaIDProf();
+	        	adiID.mensagemFinalizado();//Manda a mensagem de cadastro finalizado 
+		
+		} catch (Exception e) {e.printStackTrace();} finally {
+		if (resultSet != null)try {resultSet.close();} catch (Exception e) {}
+		if (statement != null)try {statement.close();} catch (Exception e) {}
+		if (connection != null)try {connection.close();} catch (Exception e) {}
+		}
+		return insere;	
+		
+	}
+	public void procProfConsul() { //Procura na tabela profissionais e seleciona todos
+		NovaConsulta consul = new NovaConsulta();
+		System.out.println("Iniciou procuraProf em Conecta!");
+		caso = 6; 
+		selectSql = String.format("SELECT NomeProf from Profissional where IDProf = '%d'",consul.chatID);
+		System.out.println(selectSql);
+		Consulta();
+		procuraUsuProf();		
+	}
+	public void procuraUsuProf() { //Procura na tabela profissionais e seleciona todos
+		System.out.println("Iniciou procuraUsuProf em Conecta!");
+		caso = 5; 
+		selectSql = String.format("SELECT PrimeiroNome from usuariostelegram where Profissional = '%s'",resultado);
 		Consulta();
 	}
 	
@@ -90,11 +129,11 @@ public class Conecta {
 			
 		switch (caso) {	
 			case 1: //Procura
-				System.out.println("Iniciou caso 1 em Conecta!");
+				System.out.println("Iniciou caso 1 em Conecta!");	
 				selectSql = select;
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(selectSql);
-
+				
 				while (resultSet.next()) {
 		            System.out.println(resultSet.getString("PrimeiroNome"));
 		            resultado = resultSet.getString("PrimeiroNome");
@@ -123,9 +162,46 @@ public class Conecta {
 				adicionaprof.AdicionaProf();
 				profissionais.clear();
 				break; 
-			}			
-		} catch (Exception e) 
-			{e.printStackTrace();
+			case 4: //Insere os profissionais no array e chama o adiciona prof 
+				System.out.println("Iniciou caso 4 em Conecta!");
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				while (resultSet.next()) {
+						profissionais.add(resultSet.getString("NomeProf"));   		            
+		        }
+				
+				System.out.println(profissionais);
+				addID.adicionaIDProf();
+				profissionais.clear();
+				break; 
+			case 5: //Insere os profissionais no array e chama o adiciona prof 
+				NovaConsulta consul = new NovaConsulta();
+				System.out.println("Iniciou caso 5 em Conecta!");
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				while (resultSet.next()) {
+						usuarios.add(resultSet.getString("PrimeiroNome"));   		            
+		        }
+				
+				System.out.println(usuarios);
+				consul.tecladoConsulta();
+				usuarios.clear();
+				break;
+			case 6: //Procura
+				System.out.println("Iniciou caso 1 em Conecta!");				
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				
+				while (resultSet.next()) {
+		            System.out.println(resultSet.getString("NomeProf"));
+		            resultado = resultSet.getString("NomeProf");
+		            System.out.println("Resultado em caso 1 em consulta "+resultado);
+		        }
+				break;
+
+			}
+		
+		} catch (Exception e){e.printStackTrace();
 		} finally {
 			// Close the connections after the data has been handled.
 			if (resultSet != null)

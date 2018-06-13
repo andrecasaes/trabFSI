@@ -28,6 +28,7 @@ public class BotApi20 extends TelegramLongPollingBot {
 	static Message reply;
 	static String novoNome;
 	static String nomeProf;
+	static String nomeCliente, nomeAno,nomeMes,nomeDia,nomeHora,nomeMin;//Variaveis para a agendar nova consulta
 	static int z=1;
 	static int t=1;
 	static String textomsg;
@@ -35,9 +36,10 @@ public class BotApi20 extends TelegramLongPollingBot {
 	NovoUsuario novo = new NovoUsuario();
 	Conecta consult = new Conecta();
 	AdicionaProf adicio = new AdicionaProf();
+	adicionaIDProf adiID = new adicionaIDProf();
+	NovaConsulta novaconsul = new NovaConsulta();
 	@Override
 	public void onUpdateReceived(Update update) {
-
 		if (update.hasMessage() && update.getMessage().hasText()) { // We check if the update has a message and the message has text
 
 			// variaveis
@@ -67,6 +69,8 @@ public class BotApi20 extends TelegramLongPollingBot {
 			
 			case "/Start": novo.NovoUsuario(); novo.casonovo=1; break;
 			case "/start": novo.NovoUsuario(); novo.casonovo=1; break;
+			case "/consulta": novaconsul.pegaClientes(); break;
+			case "/Consulta": novaconsul.pegaClientes(); break;
 			case "Oi":t=1; mensagemPadrao(); break;
 			case "oi":t=1; mensagemPadrao(); break;
 			case "ping":t=2; mensagemPadrao(); break;
@@ -82,11 +86,38 @@ public class BotApi20 extends TelegramLongPollingBot {
 				
 				try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
 				break;
-				} else if(z==2) {
-					System.out.println("Entrou no if do Bot2.0");
+				} else if(z==2) {//Adiciona profissional em usuariotelegram
 					nomeProf = update.getMessage().getText();
 					consult.insereProfissional();
 					z=1;
+				}else if(z==3) {//Insere id em profissional);
+					nomeProf = update.getMessage().getText();
+					consult.insereIDProfissional();
+					z=1;
+				}else if(z==4) {//Insere nome em consulta
+					z=1;
+					nomeCliente = update.getMessage().getText();
+					novaconsul.pegaAno();
+				}else if(z==5) {//Insere dia em consulta
+					z=1;
+					nomeDia = update.getMessage().getText();
+					novaconsul.pegaHora();
+				}else if(z==6) {//Insere mes em consulta
+					z=1;
+					nomeMes = update.getMessage().getText();
+					novaconsul.pegaDia();
+				}else if(z==7) {//Insere ano em consulta
+					z=1;
+					nomeAno = update.getMessage().getText();
+					novaconsul.pegaMes();
+				}else if(z==8) {//Insere hora da consulta
+					z=1;
+					nomeHora = update.getMessage().getText();
+					novaconsul.pegaMin();
+				}else if(z==9) {//Insere minutos da consulta
+					z=1;
+					nomeMin = update.getMessage().getText();
+					novaconsul.insereConsulta();
 				}
 			}
 		}
@@ -100,7 +131,7 @@ public class BotApi20 extends TelegramLongPollingBot {
 	
 	public void mensagemPadrao() {
 		if (t==1) {
-			textomsg = "Oie\nViu? agora eu consigo falar responder o oi das pessoas.... Estou evoluindo...\n"
+			textomsg = "Oie\nViu? Agora eu consigo falar responder o oi das pessoas.... Estou evoluindo...\n"
 					+ "Eu sei tambem jogar um jogo super legal....\nDigita ping ai =)";
 		}else if(t==2) {
 			textomsg = "Pong.\n"

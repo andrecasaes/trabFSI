@@ -13,11 +13,12 @@ public class Main {
 		// Instantiate Telegram Bots API
 		TelegramBotsApi botsApi = new TelegramBotsApi();
 		MandaMSG bot = new MandaMSG();
-
+		envioAutomatico en = new envioAutomatico();
 		// Register our bot
 		try {
 			botsApi.registerBot(new BotApi20());
 			bot.MandaMSG();	
+			
 		} catch (TelegramApiException e) {
 			e.printStackTrace();
 		}
