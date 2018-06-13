@@ -8,7 +8,7 @@
 <body>
     <div class = "logo"><h1>No Show</h1></div>
     <h2 class = "titulo">Cadastro</h2>
-    <form name ="Cadastro" method="post" onsubmit="return validateCadastro();" action="banco.php">
+    <form method="post" name="Cadastro" onsubmit="return funcao()" action="banco.php">
         <table>
             <tr>
                 <td>Nome completo:</td>
@@ -16,7 +16,7 @@
             </tr>
             <tr>
                 <td>E-mail:</td>
-                <td><input size="30" autocomplete="on" id="email" type="e-mail" name="e-mail" placeholder="Onde a gente pode te encontrar?"></td>
+                <td><input size="30" id="email" type="e-mail" name="e-mail" placeholder="Onde a gente pode te encontrar?"></td>
             </tr>
             <tr>
                 <td>Usuário:</td>
@@ -32,7 +32,7 @@
             </tr>
             <tr>
                 <td>Profissão:</td>
-                <td style="text-align: left;"><select name="Profissao">
+                <td style="text-align: left;"><select name="profissao">
                         <option value="null">--------</option>
                         <option value="Cabeleireiro/a">Cabeleireiro</option>
                         <option value="Dentista">Dentista</option>
@@ -49,52 +49,50 @@
         <input class="button" type="submit" value="Pronto!"><br>
         <input class="button" type="reset" value="Limpar">
     </form>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript">
-    function validateCadastro() {
-        var nome = document.forms["Cadastro"]["nome"].value;
-        var email = document.forms["Cadastro"]["e-mail"].value;
-        var usuario = document.forms["Cadastro"]["usuario"].value;
-        var senha = document.forms["Cadastro"]["senha"].value;
-        var confirmarSenha = document.forms["Cadastro"]["confirmarSenha"].value;
-        var profissao = document.forms["Cadastro"]["Profissão"].value;
-        var email1 = document.getElementById("email");
-        var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (nome == "") {
-            alert("Por favor, digite seu nome.");
+   
+function funcao() {
+    var nome = document.forms["Cadastro"]["nome"].value;
+    var email = document.forms["Cadastro"]["e-mail"].value;
+    var usuario = document.forms["Cadastro"]["usuario"].value;
+    var senha = document.forms["Cadastro"]["senha"].value;
+    var confirmarSenha = document.forms["Cadastro"]["confirmarSenha"].value;
+    var profissao = document.forms["Cadastro"]["profissao"].value;
+    var email1 = document.getElementById("email");
+    var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+    if (nome == "") {
+        alert("Por favor, digite seu nome.");
             return false;
-        }
-        if (email == "") {
+    } else if (email == "") {
             alert("Por favor, digite um e-mail.");
             return false;
-        } else if (!filter.test(email1.value)) {
+    } else if (!filter.test(email1.value)) {
             alert("Por favor, digite um e-mail válido.");
             email1.focus;
             return false;
-        }
-        if (usuario == "") {
+    } else if (usuario == "") {
             alert("Por favor, informe um nome de usuário.");
             return false;
-        }
-        if (senha == "") {
+    } else if (senha == "") {
             alert("Por favor, digite sua senha.");
             return false;
-        }
-        if (confirmarSenha != senha) {
+    } else if (confirmarSenha != senha) {
             alert("Ops! As senhas não batem. Confira os campos Senha e Confirmar Senha.");
             return false;
-        }
-        if (profissao == "null") {
+    } else if (profissao == "null") {
             alert("Por favor, selecione uma profissão.");
             return false;
-        } else if (profissao == "Outro") {
+    } else if (profissao == "Outro") {
             var campo = document.createElement("input");
             campo.type = "text";
-        	document.getElementById("input").appendChild(campo);
+            document.getElementById("input").appendChild(campo);
             var outro = document.getElementById("outro");
             outro.value = campo.value;
-        	return false;
-        }
+            return false;
     }
+}
 </script>
 </body>
 </html>
