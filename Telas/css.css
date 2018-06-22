@@ -1,0 +1,85 @@
+/*stylesheet do site*/
+body, html {
+    text-align: center; /*alinhando todos os textos da página ao centro*/
+    height: 100%; /*definindo height para a divTransparente ocupar a página até o bottom*/
+}
+table {
+    text-align: right; /*alinhando os elementos da tabela à direita*/
+    font-family: 'Quicksand', sans-serif; /*definindo a fonte*/
+    margin-left: auto; /*margem automática para centralizar a tabela na página*/
+    margin-right: auto; /*idem*/
+}
+.espaco {
+    padding-bottom: 10px; /*padding para afastar os botões na tela de login*/
+    padding-top: 10px;
+}
+.logo {
+    background-color: rgb(66, 140, 244); /*background azul do logo*/
+    width: 100%; /*width da div azul que ocupa toda a pag*/
+    color: white; /*cor do texto*/
+    font-family: 'Amatic SC', cursive; /*fonte do texto*/
+    font-size: 20pt; /*tamanho da fonte do logo*/
+    letter-spacing: 10px; /*separando as letras do texto*/
+    position: fixed; /*A div é fixa na rolagem da página*/
+    z-index: 1; /*isso faz com que a div sobreponha os elementos com z-index menor, permitindo aquele efeito de sobreposição na rolagem*/
+}
+.titulo {
+    font-family: 'Quicksand', sans-serif; /*fonte do titulo*/
+    padding-top: 150px; /*padding para distanciar da div do logo*/
+    opacity: 1; /*definindo a opacidade do texto como normal*/
+    z-index: 0; /*deixa o titulo embaixo da div do logo*/
+}
+.texto {
+    font-family: 'Raleway', sans-serif; /*definindo a fonte dos textos comuns do site*/
+    opacity: 1; /*definindo a opacidade como normal*/
+}
+.button {
+    background-color: rgb(66, 140, 244); /*cor azul*/
+    border: none; /*sem bordas*/
+    color: white; /*texto branco*/
+    padding: 5px 10px; /*padding para aumentar o volume do botão*/
+    text-align: center; /*alinha o texto no centro do botão*/
+    text-decoration: none; /*sem underline no texto*/
+    display: inline-block; 
+    font-family: 'Quicksand', sans-serif; /*fonte*/
+    font-size: 16px;
+    border-radius: 8px;
+    /*animação*/
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+.button:hover {
+    background-color: rgb(204, 204, 204); /*a cor do botão muda quando o mouse passa em cima dele*/
+    color: black; /*o texto fica preto*/
+}
+
+a {
+    /*tratando links como se fossem botões*/
+    font-family: 'Quicksand', sans-serif;
+    background-color: rgb(66, 140, 244);
+    border: none;
+    color: white;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 8px;
+    -webkit-transition-duration: 0.4s;
+    transition-duration: 0.4s;
+}
+
+.divTransparente {
+    background: rgba(255, 255, 255, 0.6); /*definindo a cor e a opacidade da div transparente*/
+    margin-left: auto; /*margem para centralizar a div*/
+    margin-right: auto;
+    width: 90%; /*para a imagem de fundo aparecer nas "bordas"*/
+    height: 100%;
+}
+
+input[type=text], input[type=password], input[type=e-mail] {
+    border: none; /*tirando a borda da caixa de texto do input*/
+    border-bottom: 2px solid grey; /*adicionando apenas a borda de baixo*/
+    background: none; /*tirando o fundo*/
+    font-family: 'Quicksand', sans-serif; /*definindo a fonte para os inputs e placeholders*/
+}

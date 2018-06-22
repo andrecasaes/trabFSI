@@ -3,26 +3,26 @@
 <head>
     <meta http-equiv="Content-Language" content="pt-br" charset="utf-8">
     <title>Login</title>
-    <link rel="stylesheet" type="text/css" href="forms.css">
+    <link rel="stylesheet" type="text/css" href="css.css">
+    <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Arvo|BioRhyme+Expanded|Cinzel|Cormorant+Unicase|Dosis|Indie+Flower|Josefin+Sans|Jua|Open+Sans|Questrial|Quicksand|Raleway|Righteous|Roboto|Roboto+Mono|Roboto+Slab|Song+Myung" rel="stylesheet">
 </head>
 <body>
-    <div class = "logo"><h1>No Show</h1></div>
+    <div class = "logo"><h1>NO SHOW</h1></div>
     <h2 class = "titulo">Login</h2>
-    <form name = "Login" method="post" onsubmit="return validateForm()" action="menu.html">
+    <form name = "Login" method="post" onsubmit="return validateForm()" action="ope.php">
         <table>
             <tr>
                 <td>Usuário:</td>
-                <td><input type="text" name="usuario" placeholder="Usuário" required></td>
+                <td><input type="text" name="usuario" placeholder="Usuário"></td>
             </tr>
             <tr>
                 <td>Senha:</td>
-                <td><input type="password" name="senha" placeholder="Senha" required></td>
+                <td><input type="password" name="senha" placeholder="Senha"></td>
             </tr>
         </table>
-        <input class="button" type="submit" value="Entrar">
+        <div class="espaco"><input class="button" type="submit" value="Entrar"></div>
     </form>
-    <button class="button" onclick="window.location='cadastro.html'">Cadastrar</button><br>
-    <button class="buttonEsqueci" onclick="window.location='esqueciSenha.html'">Esqueci minha senha</button>
+    <button class="button" onclick="window.location='cadastro.php'">Cadastrar</button><br>
 <script type="text/javascript">
     function validateForm() {
         var usuario = document.forms["Login"]["usuario"].value;
@@ -36,7 +36,6 @@
             alert("Por favor, digite sua senha.");
             return false;
         }
-        
     }
 </script>
 </body>

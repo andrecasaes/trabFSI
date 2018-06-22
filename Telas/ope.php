@@ -1,12 +1,12 @@
 <?php
- 
-
-define('DB_SERVER', '127.0.0.1');
+//criando a conexão
+   define('DB_SERVER', '127.0.0.1');
    define('DB_USERNAME', 'root');
    define('DB_PASSWORD', '');
    define('DB_DATABASE', 'NoShow');
    $db = mysqli_connect(DB_SERVER,DB_USERNAME,DB_PASSWORD,DB_DATABASE);
 
+//iniciando a sessão
 session_start();
 
 
@@ -15,12 +15,14 @@ session_start();
       $mypassword = mysqli_real_escape_string($db,$_POST['senha']); 
       
       $sql = "SELECT * FROM profissional WHERE Usuario = '$myusername' and Senha = '$mypassword'";
+      $sql2 = "SELECT `NomeProf` FROM profissional WHERE Usuario = '$myusername' and Senha = '$mypassword'";
+
       $result = mysqli_query($db,$sql);
+      $result2 = mysqli_query($db,$sql2);
+
       $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
       
       $count = mysqli_num_rows($result);
-      
-      // If result matched $myusername and $mypassword, table row must be 1 row
 		
       if($count == 1) {
         $_SESSION['usuario'] = $myusername;
@@ -29,8 +31,4 @@ session_start();
         header("location: index.html");
       }
    }
-
-
-
-
 ?>
