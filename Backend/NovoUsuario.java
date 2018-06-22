@@ -68,7 +68,7 @@ public class NovoUsuario extends TelegramLongPollingBot {
 				List<InlineKeyboardButton> rowIn = new ArrayList<>();
 
 				rowInline.add(new InlineKeyboardButton().setText("É isso mesmo! Pode usar =)").setCallbackData("Nome ok"));
-				rowInline.add(new InlineKeyboardButton().setText("Nop, ta errado").setCallbackData("Nome errado"));
+				rowInline.add(new InlineKeyboardButton().setText("Nope, ta errado").setCallbackData("Nome errado"));
 				rowIn.add(new InlineKeyboardButton().setText("Sou um profissional!").setCallbackData("profissional"));
 				// Set the keyboard to the markup
 				rowsInline.add(rowInline);

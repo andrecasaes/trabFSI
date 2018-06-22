@@ -7,8 +7,11 @@ import javax.swing.plaf.synth.SynthSpinnerUI;
 import org.eclipse.swt.widgets.Synchronizer;
 import org.telegram.telegrambots.api.methods.send.SendMessage;
 import org.telegram.telegrambots.api.objects.Update;
+import org.telegram.telegrambots.api.objects.replykeyboard.ForceReplyKeyboard;
 import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
+import org.telegram.telegrambots.api.objects.replykeyboard.ReplyKeyboardMarkup;
 import org.telegram.telegrambots.api.objects.replykeyboard.buttons.InlineKeyboardButton;
+import org.telegram.telegrambots.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
@@ -31,16 +34,47 @@ public class MandaMSG extends TelegramLongPollingBot {
 	FuncionaBotao fun = new FuncionaBotao();
 	Conecta con = new Conecta();
 	long idAuto;
+	public void iniciaManual() {
+		con.procProfManual();
+	}
 	
+	public void avisaManual() {
+		int i=Conecta.usuarios.size();
+		ForceReplyKeyboard replyMarkup = new ForceReplyKeyboard();
+		ReplyKeyboardMarkup teclado = new ReplyKeyboardMarkup();
+		List<KeyboardRow> linha = new ArrayList<KeyboardRow>();
+		KeyboardRow[] botao = new KeyboardRow[i];		
+		String[] array = new String[i];
+		
+		array=Conecta.usuarios.toArray(array);
+
+			int j =0;
+			while( i != 0) {
+				botao[j]= new KeyboardRow();
+				botao[j].add(array[i-1]);
+				linha.add(j, botao[j]);		
+				j++;
+				i--;
+			}
+			teclado.setKeyboard(linha).setOneTimeKeyboard(true);
+			
+			SendMessage message = new SendMessage()
+					.setChatId(BotApi20.chat_id)
+					.setText("Para avisarmos sobre a consulta preciso que me diga alguns dados!\n"
+							+ "Primeiro preciso saber pra quem é a consulta.\n\n"
+							+ "Seleciona pra mim o cliente?")
+					.setReplyMarkup(teclado);
+			
+			BotApi20.z=10;
+			System.out.println("Teclado de clientes enviado!");
+		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
+	}
 	
 	
 	public void MandaMSG() {		
-		while (true) {
 			try {
-				en.envioDiario();
-				Thread.sleep(10*60 * 1000);
 				connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root", "");
-				select = "SELECT * FROM `mandaconsulta`";
+				select = "SELECT * FROM todasconsulta WHERE NomeCliente = '"+BotApi20.nomeManual+"'";//falta variavel nome do cliente
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(select);
 				//System.out.println("esse " + resultSet);
@@ -57,9 +91,6 @@ public class MandaMSG extends TelegramLongPollingBot {
 					System.out.println(hr+" "+min);
 					System.out.println("BAIXO " + ID);
 					enviaMSG();
-					select = String.format("DELETE FROM `mandaconsulta` WHERE ID = '%d'", ID) ;//Apaga a linha dos que ja mandou msg
-					statement = connection.createStatement();
-					resultado = statement.executeUpdate(select);
 					ID=0;
 				}
 				if (ID == 0) {System.out.println("Deu nulo");}
@@ -69,8 +100,6 @@ public class MandaMSG extends TelegramLongPollingBot {
 					if (statement != null)try {statement.close();} catch (Exception e) {}
 					if (connection != null)try {connection.close();} catch (Exception e) {}
 			}
-			
-		} // While grande
 	}// Classe
 	public void enviaMSG() {
 		//System.out.println("Mandou msg para: "+ID);
@@ -90,7 +119,7 @@ public class MandaMSG extends TelegramLongPollingBot {
 
 		rowInline.add(new InlineKeyboardButton().setText("Vou sim").setCallbackData("Sim"));
 		rowInline.add(
-				new InlineKeyboardButton().setText("Vai te catar, vou não").setCallbackData("Nao"));
+				new InlineKeyboardButton().setText("Não vou poder ir").setCallbackData("Nao"));
 		// Set the keyboard to the markup
 		rowsInline.add(rowInline);
 		// Add it to the message
@@ -98,8 +127,6 @@ public class MandaMSG extends TelegramLongPollingBot {
 		manda.setReplyMarkup(markupInline);
 
 		try {execute(manda);} catch (TelegramApiException c) {c.printStackTrace();}
-		
-		System.out.println("ID2:" +ID);
 	}
 	
 	public ResultSet ProcuraNome() {		
@@ -138,7 +165,7 @@ public class MandaMSG extends TelegramLongPollingBot {
 		List<InlineKeyboardButton> rowInline = new ArrayList<>();
 
 		rowInline.add(new InlineKeyboardButton().setText("Vou sim").setCallbackData("Sim"));
-		rowInline.add(new InlineKeyboardButton().setText("Vai te catar, vou não").setCallbackData("Nao"));
+		rowInline.add(new InlineKeyboardButton().setText("Não vou poder ir").setCallbackData("Nao"));
 		// Set the keyboard to the markup
 		rowsInline.add(rowInline);
 		// Add it to the message

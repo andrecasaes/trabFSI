@@ -29,6 +29,7 @@ public class BotApi20 extends TelegramLongPollingBot {
 	static String novoNome;
 	static String nomeProf;
 	static String nomeCliente, nomeAno,nomeMes,nomeDia,nomeHora,nomeMin;//Variaveis para a agendar nova consulta
+	static String nomeManual;
 	static int z=1;
 	static int t=1;
 	static String textomsg;
@@ -38,6 +39,8 @@ public class BotApi20 extends TelegramLongPollingBot {
 	AdicionaProf adicio = new AdicionaProf();
 	adicionaIDProf adiID = new adicionaIDProf();
 	NovaConsulta novaconsul = new NovaConsulta();
+	MandaMSG manda = new MandaMSG();
+	ExibeConsultas ex =new ExibeConsultas();
 	@Override
 	public void onUpdateReceived(Update update) {
 		if (update.hasMessage() && update.getMessage().hasText()) { // We check if the update has a message and the message has text
@@ -69,8 +72,12 @@ public class BotApi20 extends TelegramLongPollingBot {
 			
 			case "/Start": novo.NovoUsuario(); novo.casonovo=1; break;
 			case "/start": novo.NovoUsuario(); novo.casonovo=1; break;
+			case "/avisar": manda.iniciaManual(); break;
+			case "/Avisar": manda.iniciaManual(); break;
 			case "/consulta": novaconsul.pegaClientes(); break;
 			case "/Consulta": novaconsul.pegaClientes(); break;
+			case "/agenda": ex.pegaClientes(); break;
+			case "/Agenda": ex.pegaClientes(); break;
 			case "Oi":t=1; mensagemPadrao(); break;
 			case "oi":t=1; mensagemPadrao(); break;
 			case "ping":t=2; mensagemPadrao(); break;
@@ -117,7 +124,11 @@ public class BotApi20 extends TelegramLongPollingBot {
 				}else if(z==9) {//Insere minutos da consulta
 					z=1;
 					nomeMin = update.getMessage().getText();
-					novaconsul.insereConsulta();
+					novaconsul.confConsulta();
+				}else if(z==10) {//Insere minutos da consulta
+					z=1;
+					nomeManual = update.getMessage().getText();
+					manda.MandaMSG();
 				}
 			}
 		}

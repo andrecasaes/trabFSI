@@ -8,6 +8,8 @@ import org.telegram.telegrambots.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.exceptions.TelegramApiException;
 
+import oracle.net.aso.n;
+
 public class FuncionaBotao extends TelegramLongPollingBot {
 	String call_data;
 	long message_id;
@@ -19,6 +21,7 @@ public class FuncionaBotao extends TelegramLongPollingBot {
 	NovoUsuario inicia = new NovoUsuario();
 	Conecta consult = new Conecta();
 	envioAutomatico en = new envioAutomatico();
+	NovaConsulta nova = new NovaConsulta();
 
 	@Override
 	public void onUpdateReceived(Update update) {
@@ -76,6 +79,21 @@ public class FuncionaBotao extends TelegramLongPollingBot {
 					+ "Agora só falta mais um passo para completar seu cadastro!";
 			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);		
 			consult.procuraProfSemID();
+			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
+		break;
+		
+		case "ConsultaOK":
+			answer = "Que ótimo!\n"
+					+ "Consulta marcada!\n"
+					+ BotApi20.nomeDia+"/"+NovaConsulta.numMes+"/"+BotApi20.nomeAno+" às "+BotApi20.nomeHora+":"+BotApi20.nomeMin+" para "+BotApi20.nomeCliente;
+			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);		
+			nova.insereConsulta();
+			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
+		break;
+		case "ConsultaNOK":
+			answer = "Vish, vamos recomeçar então!";
+			new_message = new EditMessageText().setChatId(chat_id).setMessageId(toIntExact(message_id)).setText(answer);		
+			nova.pegaClientes();
 			try {execute(new_message);} catch (TelegramApiException e) {e.printStackTrace();}
 		break;
 		default:

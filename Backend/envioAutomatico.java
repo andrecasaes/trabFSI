@@ -26,7 +26,15 @@ public class envioAutomatico {
 	static long IDProf;
 	static String nomeProf;
 	
-	
+	public void loopAuto() {
+		try {
+			envioDiario();
+			Thread.sleep(10*60 * 1000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 	public void envioDiario() {
 		DateFormat dat = new SimpleDateFormat("yyyy/MM/dd");

@@ -1,4 +1,11 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.telegram.telegrambots.api.methods.send.SendMessage;
@@ -274,7 +281,6 @@ public class NovaConsulta extends TelegramLongPollingBot{
 				nu = ""+p;
 			}
 			
-			System.out.println(nu);
 			botao[q].add(nu);//Adiciona a escrita nos botoes
 				
 			if (k>(colunas-1)) {		
@@ -301,8 +307,8 @@ public class NovaConsulta extends TelegramLongPollingBot{
 		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
 	}
 	
-	public void insereConsulta() {
-		System.out.println("Ae caralhoooooooo");
+	public void confConsulta() {
+		System.out.println("Aeeeeeeeeeeeeee");
 		System.out.println("Consulta do "+BotApi20.nomeCliente+"\nNo dia "+BotApi20.nomeDia+"/"+BotApi20.nomeMes+"/"+BotApi20.nomeAno);
 		
 		SendMessage message = new SendMessage()
@@ -326,7 +332,35 @@ public class NovaConsulta extends TelegramLongPollingBot{
 		message.setReplyMarkup(markupInline);
 		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
 	}
-
+	public void insereConsulta() {
+		String resultado;
+		Connection connection = null;
+		Statement statement = null;
+		ResultSet resultSet = null;
+		String selectSql;
+		int insere = 0;
+		con.procuraIDcomUsu();
+		
+		String data = BotApi20.nomeAno+"-"+numMes+"-"+BotApi20.nomeDia;
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/noshow?useSSL=false", "root","");
+			selectSql = "INSERT INTO `todasconsulta` (`ID`, `Data`, `Hora`, `Minuto`, `Profissional`, `nomeCliente`) VALUES ('"+Conecta.clienteID+"','"+data+"','"+BotApi20.nomeHora+"','"+BotApi20.nomeMin+"','"+Conecta.nomeProf+"','"+BotApi20.nomeCliente+"')";
+	        	statement = connection.createStatement();
+	        	insere = statement.executeUpdate(selectSql); 
+		
+		} catch (Exception e) {e.printStackTrace();} finally {
+		if (resultSet != null)try {resultSet.close();} catch (Exception e) {}
+		if (statement != null)try {statement.close();} catch (Exception e) {}
+		if (connection != null)try {connection.close();} catch (Exception e) {}
+		}
+	}
+	public void naoProfissional() {
+		SendMessage message = new SendMessage()
+				.setChatId(BotApi20.chat_id)
+				.enableMarkdown(true)
+				.setText("Esse comando é exclusivo para os profissionais =(");
+		try {execute(message);} catch (TelegramApiException e) {e.printStackTrace();}
+	}
 	@Override
 	public String getBotUsername() {return null;}
 	@Override

@@ -4,18 +4,26 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import jdk.internal.dynalink.beans.StaticClass;
+
 public class Conecta {
 	String select;
 	static String resultado;
 	int caso;
 	int insere = 0;
+	static String clienteID;
 	static ArrayList<String> profissionais =  new ArrayList<>();
 	static ArrayList<String> usuarios =  new ArrayList<>();
+	static ArrayList<String> Data =  new ArrayList<>();
+	static ArrayList<String> Hora =  new ArrayList<>();
+	static ArrayList<String> Minuto =  new ArrayList<>();
+	static ArrayList<String> nomeCliente =  new ArrayList<>();
 	int z = 1;
 	Connection connection = null;
 	Statement statement = null;
 	ResultSet resultSet = null;
 	String selectSql;
+	static String nomeProf;
 	
 	
 	AdicionaProf adicionaprof = new AdicionaProf();
@@ -109,17 +117,63 @@ public class Conecta {
 		System.out.println("Iniciou procuraProf em Conecta!");
 		caso = 6; 
 		selectSql = String.format("SELECT NomeProf from Profissional where IDProf = '%d'",consul.chatID);
+		Consulta();
+		if (resultado==null) {
+			consul.naoProfissional();
+		}else {procuraUsuProf();}	
+	}
+	public void procProfManual() { //Procura na tabela profissionais e seleciona todos
+		NovaConsulta consul = new NovaConsulta();
+		System.out.println("Iniciou procuraProf em Conecta!");
+		caso = 6; 
+		selectSql = String.format("SELECT NomeProf from Profissional where IDProf = '%d'",BotApi20.chat_id);
 		System.out.println(selectSql);
 		Consulta();
-		procuraUsuProf();		
+		if (resultado==null) {
+			consul.naoProfissional();
+		}else {procuraUsuConsProf();}
+				
 	}
+	
 	public void procuraUsuProf() { //Procura na tabela profissionais e seleciona todos
 		System.out.println("Iniciou procuraUsuProf em Conecta!");
 		caso = 5; 
+		nomeProf=resultado;
 		selectSql = String.format("SELECT PrimeiroNome from usuariostelegram where Profissional = '%s'",resultado);
 		Consulta();
 	}
-	
+	public void procuraUsuConsProf() { //Procura na tabela profissionais e seleciona todos
+		System.out.println("Iniciou procuraUsuProf em Conecta!");
+		caso = 7; 
+		nomeProf=resultado;
+		selectSql = String.format("SELECT nomeCliente from todasconsulta where Profissional = '%s'",resultado);
+		Consulta();
+	}
+	public void exibirConsulProf() { //Procura na tabela profissionais e seleciona todos
+		NovaConsulta consul = new NovaConsulta();
+		System.out.println("Iniciou procuraProf em Conecta!");
+		caso = 8; 
+		selectSql = String.format("SELECT NomeProf from Profissional where IDProf = '%d'",consul.chatID);
+		Consulta();
+		if (resultado==null) {
+			consul.naoProfissional();
+		}else {exibirConsulUsua();}	
+	}
+	public void exibirConsulUsua() { //Procura na tabela profissionais e seleciona todos
+		System.out.println("Iniciou procuraUsuProf em Conecta!");
+		caso = 9; 
+		nomeProf=resultado;
+		System.out.println("aaaaaa"+nomeProf);
+		selectSql = String.format("SELECT * from todasconsulta where Profissional = '%s'",resultado);
+		Consulta();
+	}
+	public void procuraIDcomUsu() { //Procura na tabela profissionais e seleciona todos
+		System.out.println("Iniciou procuraUsuProf em Conecta!");
+		NovaConsulta no = new NovaConsulta();
+		caso = 10; 
+		selectSql = String.format("SELECT ID from usuariostelegram where PrimeiroNome = '%s'",BotApi20.nomeCliente);
+		Consulta();
+	}
 	public void Consulta() {
 		System.out.println("Iniciou consulta em Conecta!");
 		resultado=null;
@@ -188,7 +242,7 @@ public class Conecta {
 				usuarios.clear();
 				break;
 			case 6: //Procura
-				System.out.println("Iniciou caso 1 em Conecta!");				
+				System.out.println("Iniciou caso 6 em Conecta!");				
 				statement = connection.createStatement();
 				resultSet = statement.executeQuery(selectSql);
 				
@@ -198,8 +252,64 @@ public class Conecta {
 		            System.out.println("Resultado em caso 1 em consulta "+resultado);
 		        }
 				break;
-
-			}
+			case 7: //Insere os profissionais no array e chama o adiciona prof 
+				MandaMSG man = new MandaMSG();
+				System.out.println("Iniciou caso 7 em Conecta!");
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				while (resultSet.next()) {
+						usuarios.add(resultSet.getString("nomeCliente"));   		            
+		        }
+				
+				System.out.println(usuarios);
+				man.avisaManual();
+				usuarios.clear();
+				break;
+			case 8: //Procura
+				System.out.println("Iniciou caso 8 em Conecta!");				
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				
+				while (resultSet.next()) {
+		            System.out.println(resultSet.getString("NomeProf"));
+		            resultado = resultSet.getString("NomeProf");
+		            System.out.println("Resultado em caso 1 em consulta "+resultado);
+		        }
+				break;
+			case 9: //Insere os profissionais no array e chama o adiciona prof 
+				ExibeConsultas ex = new ExibeConsultas();
+				System.out.println("Iniciou caso 9 em Conecta!");
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				while (resultSet.next()) {
+					Data.add(resultSet.getString("Data")); 
+					Hora.add(resultSet.getString("Hora"));
+					Minuto.add(resultSet.getString("Minuto"));
+					nomeCliente.add(resultSet.getString("nomeCliente")); 
+						
+		        }
+				
+				System.out.println(Data);
+				ex.exibeLista();
+				Data.clear();
+				Hora.clear();
+				Minuto.clear();
+				nomeCliente.clear();
+				break;
+			
+			case 10: //Procura
+				System.out.println("Iniciou caso 6 em Conecta!");				
+				statement = connection.createStatement();
+				resultSet = statement.executeQuery(selectSql);
+				
+				while (resultSet.next()) {
+		            System.out.println(resultSet.getString("ID"));
+		            resultado = resultSet.getString("ID");
+		        	clienteID = resultado;
+		            System.out.println("Resultado em caso 1 em consulta "+resultado);
+		        }
+				break;
+		}
 		
 		} catch (Exception e){e.printStackTrace();
 		} finally {
